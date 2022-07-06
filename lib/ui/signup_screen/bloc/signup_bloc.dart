@@ -15,11 +15,11 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
 
   Future<void> signUp(UserSignupEvent event, Emitter<SignupState> emit) async {
     if (await Network.isConnected()) {
-     // emit(SignupLoadingState());
+     emit(SignupLoadingState());
       log("${event.input}");
       SignupResponse response = await repository.signupUser(event.input);
       if (!response.error) {
-        emit(SignupSuccessState(userDetails: response.info!));
+        emit(SignupSuccessState(message: response.message));
       } else {
         emit(SignupFailureState(message: response.message));
       }

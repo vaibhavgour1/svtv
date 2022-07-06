@@ -11,10 +11,10 @@ class SignupInitialState extends SignupState {}
 class SignupLoadingState extends SignupState {}
 
 class SignupSuccessState extends SignupState {
-  final Info userDetails;
-  SignupSuccessState({required this.userDetails});
+  final String message;
+  SignupSuccessState({required this.message});
   @override
-  List<Object?> get props => [userDetails];
+  List<Object?> get props => [message];
 }
 
 class SignupFailureState extends SignupState {
