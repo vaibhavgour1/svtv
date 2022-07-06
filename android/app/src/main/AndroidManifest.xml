@@ -1,5 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.svtvs.tv">
+    <uses-permission android:name="android.permission.INTERNET" />
+
    <application
         android:label="svtvs"
         android:name="${applicationName}"

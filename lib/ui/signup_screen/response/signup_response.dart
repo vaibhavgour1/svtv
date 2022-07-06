@@ -85,6 +85,20 @@ class Info {
         ss: json["ss"] == null ? "" : json["ss"].toString(),
       );
 
+
+  Info.name(
+      this.id,
+      this.name,
+      this.email,
+      this.ageGroup,
+      this.city,
+      this.state,
+      this.country,
+      this.mobileNo,
+      this.dateOfBirth,
+      this.profileImage,
+      this.ss);
+
   Map<String, dynamic> toMap() => {
         "id": id,
         "name": name,

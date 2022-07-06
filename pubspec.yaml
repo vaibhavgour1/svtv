@@ -37,6 +37,7 @@ dependencies:
   dio:
   connectivity:
   fluttertoast:
+  email_validator:
 
 
   # The following adds the Cupertino Icons font to your application.

@@ -1,8 +1,11 @@
 import 'dart:collection';
+import 'dart:developer';
 
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:svtvs/ui/login_screen/login_screen.dart';
 import 'package:svtvs/ui/signup_screen/bloc/signup_bloc.dart';
 import 'package:svtvs/ui/signup_screen/bloc/signup_event.dart';
 import 'package:svtvs/ui/signup_screen/bloc/signup_state.dart';
@@ -56,17 +59,27 @@ class _SignupScreenState extends State<SignupScreen> {
                 margin: const EdgeInsets.only(
                     top: 14, bottom: 40, left: 12, right: 12),
                 decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8)),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                  // boxShadow: [
+                  //   BoxShadow(
+                  //     color: Colors.grey.shade300,
+                  //     blurRadius: 1.0,
+                  //     spreadRadius: 1.0
+                  //   ),
+                  // ],
+                ),
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Image.network(
-                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSA07FAdZnyW6xwesWiTlbqSQQ6r2I637EL9w&usqp=CAU",
-                        fit: BoxFit.cover,
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height * 0.18,
+                      ClipRRect(
+                        child: Image.network(
+                          "https://iriefm-wp-upload.s3.amazonaws.com/uploads/STRIDE-VISION-TV-LOGO.jpg",
+                          fit: BoxFit.cover,
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height * 0.18,
+                        ),
                       ),
                       SizedBox(
                         height: 20,
@@ -331,65 +344,72 @@ class _SignupScreenState extends State<SignupScreen> {
                       SizedBox(
                         height: 20,
                       ),
-                      BlocBuilder<SignupBloc, SignupState>(
+                      BlocConsumer<SignupBloc, SignupState>(
+                        listener: (context, state) {
+                          log("State  $state");
+                          if (state is SignupSuccessState) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const LoginScreen()));
+                            Fluttertoast.showToast(msg: "Login Success");
+                          }
+                          if (state is SignupFailureState) {
+                            print(state.message);
+                          }
+                        },
                         builder: (context, state) {
                           if (state is SignupLoadingState) {
                             return Center(
                               child: CircularProgressIndicator(),
                             );
                           }
-                          if (state is SignupSuccessState) {}
-                          if (state is SignupFailureState) {}
                           return InkWell(
                               onTap: () {
                                 if (nameCtr.text.isEmpty) {
                                   Fluttertoast.showToast(
-                                      msg: "Please enter name");
-                                } else if (emailCtr.text.isEmpty) {
-                                  Fluttertoast.showToast(
-                                      msg: "Please enter address");
-                                } else if (emailRegExp
-                                    .hasMatch(emailCtr.text)) {
-                                  Fluttertoast.showToast(
-                                      msg: "Please enter valid email address");
+                                      msg: "Full name is required");
                                 } else if (phoneCtr.text.isEmpty) {
                                   Fluttertoast.showToast(
-                                      msg: "Please enter mobile number");
-                                } else if (mobileRegExp
-                                    .hasMatch(phoneCtr.text)) {
+                                      msg: "Mobile number is required");
+                                } else if (phoneCtr.text.length < 10) {
                                   Fluttertoast.showToast(
-                                      msg: "Please enter valid mobile number");
+                                      msg: "Enter valid mobile number");
+                                } else if (emailCtr.text.isEmpty) {
+                                  Fluttertoast.showToast(
+                                      msg: "Email is required");
+                                } else if (!EmailValidator.validate(
+                                    emailCtr.text)) {
+                                  Fluttertoast.showToast(
+                                      msg: "Enter valid email");
                                 } else if (passCtr.text.isEmpty) {
                                   Fluttertoast.showToast(
-                                      msg: "Please enter password");
-                                } else if (passCtr.text.length < 8) {
+                                      msg: "Password is required");
+                                } else if (!passRegExp.hasMatch(passCtr.text)) {
                                   Fluttertoast.showToast(
                                       msg:
-                                          "Password should be contains 8 characters");
-                                } else if (passRegExp.hasMatch(passCtr.text)) {
+                                          "Password must contain at least 1 lowercase latte, 1 uppercase latter, 1 digit, 1 Special character and it should be 8 character long");
+                                } else if (confPassCtr.text.isEmpty) {
                                   Fluttertoast.showToast(
-                                      msg: "Password must contain at least 1 "
-                                          "lowercase latte, 1 uppercase latter, 1 digit, "
-                                          "1 Special character");
-                                } else if (countryCtr.text.isEmpty) {
-                                  Fluttertoast.showToast(
-                                      msg: "Please enter confirm password");
-                                } else if (confPassCtr.text.length < 8) {
+                                      msg: "Confirm password is required");
+                                } else if (!passRegExp
+                                    .hasMatch(confPassCtr.text)) {
                                   Fluttertoast.showToast(
                                       msg:
-                                          "Confirm password should be contains 8 characters");
-                                } else if (passRegExp.hasMatch(passCtr.text)) {
+                                          "Confirm password must contain at least 1 lowercase latte, 1 uppercase latter, 1 digit, 1 Special character and it should be 8 character long");
+                                } else if (confPassCtr.text != passCtr.text) {
                                   Fluttertoast.showToast(
-                                      msg:
-                                          "Confirm password must contain at least 1 "
-                                          "lowercase latte, 1 uppercase latter, 1 digit, "
-                                          "1 Special character");
+                                      msg: "Password not match");
                                 } else {
                                   Map<String, dynamic> input = HashMap();
                                   input['name'] = nameCtr.text;
                                   input['email'] = emailCtr.text;
                                   input['mobile'] = phoneCtr.text;
                                   input['password'] = confPassCtr.text;
+                                  // input['country'] = countryCtr.text;
+                                  // input['state'] = stateCtr.text;
+                                  // input['city'] = cityCtr.text;
+                                  // input['age'] = ageGroupCtr.text;
 
                                   signupBloc.add(UserSignupEvent(input: input));
                                 }
@@ -430,7 +450,11 @@ class _SignupScreenState extends State<SignupScreen> {
                             ),
                             InkWell(
                               onTap: () {
-                                // Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginScreen()));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const LoginScreen()));
                               },
                               child: Text(
                                 "Signin",

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:svtvs/ui/login_screen/login_screen.dart';
 import 'package:svtvs/ui/signup_screen/signup_screen.dart';
 import 'package:svtvs/utility/colors.dart';
 
@@ -20,8 +21,8 @@ class _SplashScreenState extends State<SplashScreen> {
 navigation(){
   Future.delayed(
       Duration(seconds: 1),
-          () => Navigator.push(
-          context, MaterialPageRoute(builder: (context) => SignupScreen())));
+          () => Navigator.pushAndRemoveUntil(
+          context, MaterialPageRoute(builder: (context) => const LoginScreen()), ModalRoute.withName('/')));
 }
   @override
   Widget build(BuildContext context) {
