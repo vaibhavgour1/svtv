@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:svtvs/api/endpoint.dart';
 import 'package:svtvs/api/server_error.dart';
 import 'package:svtvs/main.dart';
+import 'package:svtvs/ui/category_dashboard/response/category_response.dart';
 import 'package:svtvs/ui/login_screen/response/login_response.dart';
 import 'package:svtvs/ui/signup_screen/response/signup_response.dart';
 
@@ -47,6 +48,23 @@ class ApiRepository {
         message = "Something Went wrong";
       }
       return LoginResponse(error: false, message: message);
+    }
+  }
+
+  Future<CategoryResponse> getCategories() async {
+    try {
+      Response res = await dio.get(EndPoint.getCategories);
+      CategoryResponse response = CategoryResponse.fromJson(res.toString());
+      return response;
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Something Went wrong";
+      }
+      return CategoryResponse(error: false, message: message);
     }
   }
 }

@@ -1,9 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:svtvs/ui/category_dashboard/category_dashboard.dart';
 import 'package:svtvs/ui/login_screen/login_screen.dart';
 import 'package:svtvs/ui/signup_screen/signup_screen.dart';
 import 'package:svtvs/utility/colors.dart';
+import 'package:svtvs/utility/constants.dart';
+import 'package:svtvs/utility/shared_prefernce.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -18,12 +21,28 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     navigation();
   }
-navigation(){
-  Future.delayed(
-      Duration(seconds: 1),
+
+  navigation() async {
+    bool isLoggedIn =
+        await SharedPref.getBooleanPreference(Constant.isLoggedIn);
+    if (isLoggedIn) {
+      Future.delayed(
+          Duration(seconds: 1),
+              () => Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const CategoryDashBoard()),
+              ModalRoute.withName('/')));
+
+    } else {
+      Future.delayed(
+          Duration(seconds: 1),
           () => Navigator.pushAndRemoveUntil(
-          context, MaterialPageRoute(builder: (context) => const LoginScreen()), ModalRoute.withName('/')));
-}
+              context,
+              MaterialPageRoute(builder: (context) => const LoginScreen()),
+              ModalRoute.withName('/')));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
