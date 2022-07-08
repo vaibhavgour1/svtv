@@ -1,9 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:svtvs/ui/category_dashboard/bloc/category_bloc.dart';
 import 'package:svtvs/ui/category_dashboard/bloc/category_event.dart';
 import 'package:svtvs/ui/category_dashboard/bloc/category_state.dart';
 import 'package:svtvs/ui/category_dashboard/response/category_response.dart';
+import 'package:svtvs/ui/update_profile/update_profile_screen.dart';
 import 'package:svtvs/widgets/tringle_background.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
@@ -51,7 +53,16 @@ class _CategoryDashBoardState extends State<CategoryDashBoard> {
           leadingWidth: 10,
           leading: IconButton(
               onPressed: () {}, icon: Icon(Icons.arrow_back_ios), iconSize: 18),
-          actions: [IconButton(onPressed: () {}, icon: Icon(Icons.menu))],
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ProfileScreen()));
+                },
+                icon: Icon(Icons.menu))
+          ],
           elevation: 0,
           bottom: PreferredSize(
             preferredSize: Size.fromHeight(50),
@@ -126,71 +137,88 @@ class _CategoryDashBoardState extends State<CategoryDashBoard> {
                     return Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(5),
-                      child: SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.24,
-                        child: AspectRatio(
-                          aspectRatio: 16 / 9,
-                          child: _ytbPlayerController != null
-                              ? YoutubePlayerIFrame(
-                                  controller: _ytbPlayerController)
-                              : Center(child: CircularProgressIndicator()),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.08,
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          "  Popular Cateory",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: GridView.builder(
-                          padding:
-                              const EdgeInsets.symmetric(horizontal: 14),
-                          itemCount: 9,
-                          shrinkWrap: true,
-                          physics: AlwaysScrollableScrollPhysics(),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            childAspectRatio: 1 / 1.3,
-                            crossAxisSpacing: 12,
-                            mainAxisSpacing: 20,
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(5),
+                          child: SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.24,
+                            child: AspectRatio(
+                              aspectRatio: 16 / 9,
+                              child: _ytbPlayerController != null
+                                  ? YoutubePlayerIFrame(
+                                      controller: _ytbPlayerController)
+                                  : Center(child: CircularProgressIndicator()),
+                            ),
                           ),
-                          itemBuilder: (context, index) {
-                            return Column(
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(100),
-                                  child: Container(
-                                    padding: const EdgeInsets.all(25),
-                                    color: Colors.pink.shade700,
-                                    child: Image.network(
-                                      categoryList[index].categoryIcon,
-                                      fit: BoxFit.contain,
+                        ),
+                        Container(
+                          height: MediaQuery.of(context).size.height * 0.08,
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "  Popular Cateory",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: GridView.builder(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 14),
+                              itemCount: 9,
+                              shrinkWrap: true,
+                              physics: AlwaysScrollableScrollPhysics(),
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                childAspectRatio: 1 / 1.3,
+                                crossAxisSpacing: 12,
+                                mainAxisSpacing: 20,
+                              ),
+                              itemBuilder: (context, index) {
+                                return Column(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(100),
+                                      child: Container(
+                                        padding: const EdgeInsets.all(25),
+                                        color: Colors.pink.shade700,
+                                        child: CachedNetworkImage(
+                                          imageUrl:
+                                              categoryList[index].categoryIcon,
+                                          imageBuilder:
+                                              (context, imageProvider) => Image(
+                                            height: 55,
+                                            width: 55,
+                                            fit: BoxFit.contain,
+                                            image: imageProvider,
+                                          ),
+                                          placeholder: (context, url) =>
+                                              CircularProgressIndicator(),
+                                          errorWidget: (context, url, error) =>
+                                              Icon(
+                                            Icons.category,
+                                            color: Colors.white,
+                                            size: 55,
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Text(
-                                  categoryList[index].categoryName,
-                                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-                                )
-                              ],
-                            );
-                          }),
-                    )
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text(
+                                      categoryList[index].categoryName,
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold),
+                                    )
+                                  ],
+                                );
+                              }),
+                        )
                       ],
                     );
                   },

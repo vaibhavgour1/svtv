@@ -5,6 +5,7 @@ import 'package:svtvs/main.dart';
 import 'package:svtvs/ui/category_dashboard/response/category_response.dart';
 import 'package:svtvs/ui/login_screen/response/login_response.dart';
 import 'package:svtvs/ui/signup_screen/response/signup_response.dart';
+import 'package:svtvs/ui/update_profile/response/profile_details_response.dart';
 
 class ApiRepository {
   static final ApiRepository repository = ApiRepository.internal();
@@ -65,6 +66,24 @@ class ApiRepository {
         message = "Something Went wrong";
       }
       return CategoryResponse(error: false, message: message);
+    }
+  }
+
+  Future<ProfileDetailsResponse> profileDetailsUpdate() async {
+    try {
+      Response res = await dio.get(EndPoint.updateProfile);
+      ProfileDetailsResponse response =
+          ProfileDetailsResponse.fromJson(res.toString());
+      return response;
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Something Went wrong";
+      }
+      return ProfileDetailsResponse(error: false, message: message, userId: '');
     }
   }
 }

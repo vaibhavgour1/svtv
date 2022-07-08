@@ -38,6 +38,7 @@ dependencies:
   connectivity:
   fluttertoast:
   email_validator:
+  cached_network_image:
 
 
   # The following adds the Cupertino Icons font to your application.
