@@ -5,6 +5,7 @@ import 'package:svtvs/main.dart';
 import 'package:svtvs/ui/update_profile/bloc/profile_event.dart';
 import 'package:svtvs/ui/update_profile/bloc/profile_state.dart';
 import 'package:svtvs/ui/update_profile/response/profile_details_response.dart';
+import 'package:svtvs/utility/constants.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ProfileBloc() : super(ProfileInitialState()) {
@@ -16,16 +17,16 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       ProfileImageEvent event, Emitter<ProfileState> emit) async {}
 
   Future<void> updateDetails(
-      ProfileDetailsEvent event, Emitter<ProfileState> emit) async{
-    if(await Network.isConnected()){
+      ProfileDetailsEvent event, Emitter<ProfileState> emit) async {
+    if (await Network.isConnected()) {
       ProfileDetailsResponse response = await repository.profileDetailsUpdate();
-      if(!response.error){
+      if (!response.error) {
         emit(ProfileDetailsUploadState(message: response.message));
-      } else{
+      } else {
         emit(ProfileFailureState(message: response.message));
       }
-    } else{
-      emit(ProfileFailureState(message: "No Network Connection!"));
+    } else {
+      emit(ProfileFailureState(message: Constant.networkAlert));
     }
   }
 }

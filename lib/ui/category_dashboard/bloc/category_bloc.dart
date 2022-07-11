@@ -6,6 +6,7 @@ import 'package:svtvs/main.dart';
 import 'package:svtvs/ui/category_dashboard/bloc/category_event.dart';
 import 'package:svtvs/ui/category_dashboard/bloc/category_state.dart';
 import 'package:svtvs/ui/category_dashboard/response/category_response.dart';
+import 'package:svtvs/utility/constants.dart';
 
 class CategoryDashBoardBloc
     extends Bloc<CategoryDashBoardEvent, CategoryDashBoardState> {
@@ -24,7 +25,7 @@ class CategoryDashBoardBloc
         emit(CategoryDashBoardFailureState(message: response.message));
       }
     } else{
-      emit(CategoryDashBoardFailureState(message: "No Network Connection!"));
+      emit(CategoryDashBoardFailureState(message: Constant.networkAlert));
     }
   }
 }
