@@ -164,7 +164,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       size: 55,
                                     ),
                               ),
-
                             ),
                           ),
                         ),
