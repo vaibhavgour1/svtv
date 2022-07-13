@@ -4,6 +4,7 @@ import 'package:svtvs/ui/category_dashboard/bloc/category_bloc.dart';
 import 'package:svtvs/ui/category_dashboard/bloc/category_event.dart';
 import 'package:svtvs/ui/category_dashboard/bloc/category_state.dart';
 import 'package:svtvs/ui/category_dashboard/response/category_response.dart';
+import 'package:svtvs/ui/catrgory_screen/category_screen.dart';
 import 'package:svtvs/ui/update_profile/update_profile_screen.dart';
 import 'package:svtvs/widgets/tringle_background.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
@@ -140,7 +141,7 @@ class _CategoryDashBoardState extends State<CategoryDashBoard> {
               left: 0,
               right: 0,
               child: Container(
-                margin: const EdgeInsets.only(top: 14, bottom: 50, left: 12, right: 12),
+                margin: const EdgeInsets.only(top: 14, bottom: 50, left: 14, right: 14),
                 decoration:
                     BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
                 child: Column(
@@ -149,7 +150,8 @@ class _CategoryDashBoardState extends State<CategoryDashBoard> {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(5),
                       child: SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.24,
+                        height: MediaQuery.of(context).size.height * 0.26,
+                        width: MediaQuery.of(context).size.width,
                         child: AspectRatio(
                           aspectRatio: 16 / 9,
                           child: _ytbPlayerController != null
@@ -171,27 +173,32 @@ class _CategoryDashBoardState extends State<CategoryDashBoard> {
                     ),
                     Expanded(
                       child: GridView.builder(
-                          padding: const EdgeInsets.symmetric(horizontal: 14),
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
                           itemCount: 9,
                           shrinkWrap: true,
                           physics: AlwaysScrollableScrollPhysics(),
                           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 3,
                             childAspectRatio: 1 / 1.3,
-                            crossAxisSpacing: 12,
+                            crossAxisSpacing: 10,
                             mainAxisSpacing: 20,
                           ),
                           itemBuilder: (context, index) {
                             return Column(
                               children: [
-                                CircleAvatar(
-                                  radius: MediaQuery.of(context).size.width * 0.14,
-                                  backgroundColor: Colors.pink.shade700,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(25),
-                                    child: Image.asset(
-                                      imageList[index],
-                                      fit: BoxFit.contain,
+                                InkWell(
+                                  onTap:(){
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>CategoryListScreen()));
+                                  },
+                                  child: CircleAvatar(
+                                    radius: MediaQuery.of(context).size.width * 0.14,
+                                    backgroundColor: Colors.pink.shade700,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(25),
+                                      child: Image.asset(
+                                        imageList[index],
+                                        fit: BoxFit.contain,
+                                      ),
                                     ),
                                   ),
                                 ),
