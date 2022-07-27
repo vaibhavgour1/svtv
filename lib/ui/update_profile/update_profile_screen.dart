@@ -12,6 +12,22 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController dobController = TextEditingController();
+  TextEditingController passController = TextEditingController();
+
+  @override
+  void initState() {
+    nameController.text = "Himanshu Sharma";
+    emailController.text = "himanshu@gmail.com";
+    phoneController.text = "123456";
+    dobController.text = "25";
+    passController.text = "123456";
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -77,9 +93,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         SizedBox(
                           height: 60,
                         ),
-                        // Username
+                        //Username
                         Padding(
-                          padding: const EdgeInsets.only(left: 14, right: 14, top: 18, bottom: 10),
+                          padding: const EdgeInsets.only(left: 14, right: 14),
                           child: Row(
                             children: [
                               Image.asset(
@@ -90,9 +106,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               SizedBox(
                                 width: 20,
                               ),
-                              Text(
-                                "Himanshu Sharma",
-                                style: TextStyle(color: Colors.grey, fontSize: 12),
+                              Expanded(
+                                child: TextFormField(
+                                  controller: nameController,
+                                   style: TextStyle(color: Colors.grey, fontSize: 14),
+                                  decoration: InputDecoration(
+                                    contentPadding: const EdgeInsets.all(0),
+                                    border: InputBorder.none,
+                                  ),
+                                ),
                               ),
                             ],
                           ),
@@ -103,7 +125,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         // Email
                         Padding(
-                          padding: const EdgeInsets.only(left: 14, right: 14, top: 18, bottom: 10),
+                          padding: const EdgeInsets.only(
+                            left: 14,
+                            right: 14,
+                          ),
                           child: Row(
                             children: [
                               Image.asset(
@@ -114,9 +139,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               SizedBox(
                                 width: 20,
                               ),
-                              Text(
-                                "himanshu@gmail.com",
-                                style: TextStyle(color: Colors.grey, fontSize: 12),
+                              Expanded(
+                                child: TextFormField(
+                                  controller: emailController,
+                                   style: TextStyle(color: Colors.grey, fontSize: 14),
+                                  decoration: InputDecoration(
+                                    contentPadding: const EdgeInsets.all(0),
+                                    border: InputBorder.none,
+                                  ),
+                                ),
                               ),
                             ],
                           ),
@@ -128,7 +159,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                         //Phone
                         Padding(
-                          padding: const EdgeInsets.only(left: 14, right: 14, top: 18, bottom: 10),
+                          padding: const EdgeInsets.only(
+                            left: 14,
+                            right: 14,
+                          ),
                           child: Row(
                             children: [
                               Image.asset(
@@ -139,9 +173,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               SizedBox(
                                 width: 20,
                               ),
-                              Text(
-                                "+91 1234567890",
-                                style: TextStyle(color: Colors.grey, fontSize: 12),
+                              Expanded(
+                                child: TextFormField(
+                                  controller: phoneController,
+                                   style: TextStyle(color: Colors.grey, fontSize: 14),
+                                  decoration: InputDecoration(
+                                    contentPadding: const EdgeInsets.all(0),
+                                    border: InputBorder.none,
+                                  ),
+                                ),
                               ),
                             ],
                           ),
@@ -153,7 +193,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                         //Age
                         Padding(
-                          padding: const EdgeInsets.only(left: 14, right: 14, top: 18, bottom: 10),
+                          padding: const EdgeInsets.only(
+                            left: 14,
+                            right: 14,
+                          ),
                           child: Row(
                             children: [
                               Image.asset(
@@ -164,9 +207,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               SizedBox(
                                 width: 20,
                               ),
-                              Text(
-                                "25",
-                                style: TextStyle(color: Colors.grey, fontSize: 12),
+                              Expanded(
+                                child: TextFormField(
+                                  controller: dobController,
+                                   style: TextStyle(color: Colors.grey, fontSize: 14),
+                                  decoration: InputDecoration(
+                                    contentPadding: const EdgeInsets.all(0),
+                                    border: InputBorder.none,
+                                  ),
+                                ),
                               ),
                             ],
                           ),
@@ -177,12 +226,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
 
                         //Settings
-                        Padding(
-                          padding: const EdgeInsets.only(left: 14, right: 14, top: 18, bottom: 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
+                        Stack(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                left: 14,
+                                right: 14,
+                              ),
+                              child: Row(
                                 children: [
                                   Image.asset(
                                     "assets/images/settings.png",
@@ -192,15 +243,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   SizedBox(
                                     width: 20,
                                   ),
-                                  Text(
-                                    "Settings",
-                                    style: TextStyle(color: Colors.grey, fontSize: 12),
+                                  Expanded(
+                                    child: TextFormField(
+                                      decoration: InputDecoration(
+                                        enabled: false,
+                                        contentPadding: const EdgeInsets.all(0),
+                                        hintText: "Settings",
+                                        hintStyle: TextStyle(color: Colors.grey, fontSize: 13),
+                                        border: InputBorder.none,
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
-                              Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 12),
-                            ],
-                          ),
+                            ),
+                            Positioned(
+                              top: 0,
+                              bottom: 0,
+                              right: 10,
+                              child: Icon(Icons.arrow_forward_ios, color: Colors.grey,size: 14,),),
+                          ],
                         ),
                         Divider(
                           height: 1,
@@ -209,7 +271,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                         //Password
                         Padding(
-                          padding: const EdgeInsets.only(left: 14, right: 14, top: 18, bottom: 10),
+                          padding: const EdgeInsets.only(
+                            left: 14,
+                            right: 14,
+                          ),
                           child: Row(
                             children: [
                               Image.asset(
@@ -220,9 +285,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               SizedBox(
                                 width: 20,
                               ),
-                              Text(
-                                "************",
-                                style: TextStyle(color: Colors.grey, fontSize: 12),
+                              Expanded(
+                                child: TextFormField(
+                                  controller: passController,
+                                  obscureText: true,
+                                   style: TextStyle(color: Colors.grey, fontSize: 14),
+                                  decoration: InputDecoration(
+                                    contentPadding: const EdgeInsets.all(0),
+                                    border: InputBorder.none,
+                                  ),
+                                ),
                               ),
                             ],
                           ),

@@ -127,15 +127,16 @@ class _LoginScreenState extends State<LoginScreen> {
                           listener: (context, state) {
                         if (state is LoginSuccessState) {
                           Fluttertoast.showToast(msg: "Login Success");
+
                           Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
                                       const CategoryDashBoard()),
-                              ModalRoute.withName('/'));
+                                  (Route<dynamic> route) => false);
                         }
                         if (state is LoginFailureState) {
-                          Fluttertoast.showToast(msg: "Login Failure");
+                          Fluttertoast.showToast(msg: state.message);
                         }
                       }, builder: (context, state) {
                         if (state is LoginLoadingState) {

@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
               () => Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => const CategoryDashBoard()),
-              ModalRoute.withName('/')));
+              (Route<dynamic> route) => false));
 
     } else {
       Future.delayed(
@@ -39,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
           () => Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => const LoginScreen()),
-              ModalRoute.withName('/')));
+                  (Route<dynamic> route) => false));
     }
   }
 
