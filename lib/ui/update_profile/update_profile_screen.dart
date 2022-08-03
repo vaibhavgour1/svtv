@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:svtvs/ui/login_screen/login_screen.dart';
+import 'package:svtvs/ui/update_profile/bloc/profile_bloc.dart';
+import 'package:svtvs/ui/update_profile/bloc/profile_event.dart';
 import 'package:svtvs/utility/shared_prefernce.dart';
 import 'package:svtvs/widgets/tringle_background.dart';
 
@@ -17,6 +19,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController dobController = TextEditingController();
   TextEditingController passController = TextEditingController();
+  ProfileBloc profileBloc = ProfileBloc();
 
   @override
   void initState() {
@@ -25,6 +28,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     phoneController.text = "123456";
     dobController.text = "25";
     passController.text = "123456";
+    profileBloc.add(GetProfileDetailsEvent());
     super.initState();
   }
 
@@ -76,8 +80,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             right: 0,
             child: Container(
               margin: const EdgeInsets.only(top: 14, bottom: 50, left: 12, right: 12),
-              decoration:
-                  BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
+              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
               child: SingleChildScrollView(
                 child: Stack(
                   children: [
@@ -109,7 +112,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               Expanded(
                                 child: TextFormField(
                                   controller: nameController,
-                                   style: TextStyle(color: Colors.grey, fontSize: 14),
+                                  style: TextStyle(color: Colors.grey, fontSize: 14),
                                   decoration: InputDecoration(
                                     contentPadding: const EdgeInsets.all(0),
                                     border: InputBorder.none,
@@ -142,7 +145,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               Expanded(
                                 child: TextFormField(
                                   controller: emailController,
-                                   style: TextStyle(color: Colors.grey, fontSize: 14),
+                                  style: TextStyle(color: Colors.grey, fontSize: 14),
                                   decoration: InputDecoration(
                                     contentPadding: const EdgeInsets.all(0),
                                     border: InputBorder.none,
@@ -176,7 +179,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               Expanded(
                                 child: TextFormField(
                                   controller: phoneController,
-                                   style: TextStyle(color: Colors.grey, fontSize: 14),
+                                  style: TextStyle(color: Colors.grey, fontSize: 14),
                                   decoration: InputDecoration(
                                     contentPadding: const EdgeInsets.all(0),
                                     border: InputBorder.none,
@@ -210,7 +213,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               Expanded(
                                 child: TextFormField(
                                   controller: dobController,
-                                   style: TextStyle(color: Colors.grey, fontSize: 14),
+                                  style: TextStyle(color: Colors.grey, fontSize: 14),
                                   decoration: InputDecoration(
                                     contentPadding: const EdgeInsets.all(0),
                                     border: InputBorder.none,
@@ -233,35 +236,49 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 left: 14,
                                 right: 14,
                               ),
-                              child: Row(
-                                children: [
-                                  Image.asset(
-                                    "assets/images/settings.png",
-                                    height: 18,
-                                    width: 18,
-                                  ),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  Expanded(
-                                    child: TextFormField(
-                                      decoration: InputDecoration(
-                                        enabled: false,
-                                        contentPadding: const EdgeInsets.all(0),
-                                        hintText: "Settings",
-                                        hintStyle: TextStyle(color: Colors.grey, fontSize: 13),
-                                        border: InputBorder.none,
+                              child: InkWell(
+                                onTap: () {
+                                  SharedPref.clearSharedPreference(context);
+                                  Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => const LoginScreen()),
+                                      (Route<dynamic> route) => false);
+                                },
+                                child: Row(
+                                  children: [
+                                    Image.asset(
+                                      "assets/images/settings.png",
+                                      height: 18,
+                                      width: 18,
+                                    ),
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                    Expanded(
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                          enabled: false,
+                                          contentPadding: const EdgeInsets.all(0),
+                                          hintText: "Logout",
+                                          hintStyle: TextStyle(color: Colors.grey, fontSize: 13),
+                                          border: InputBorder.none,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                             Positioned(
                               top: 0,
                               bottom: 0,
                               right: 10,
-                              child: Icon(Icons.arrow_forward_ios, color: Colors.grey,size: 14,),),
+                              child: Icon(
+                                Icons.arrow_forward_ios,
+                                color: Colors.grey,
+                                size: 14,
+                              ),
+                            ),
                           ],
                         ),
                         Divider(
@@ -289,7 +306,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 child: TextFormField(
                                   controller: passController,
                                   obscureText: true,
-                                   style: TextStyle(color: Colors.grey, fontSize: 14),
+                                  style: TextStyle(color: Colors.grey, fontSize: 14),
                                   decoration: InputDecoration(
                                     contentPadding: const EdgeInsets.all(0),
                                     border: InputBorder.none,
@@ -310,10 +327,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         InkWell(
                           onLongPress: () {
                             SharedPref.clearSharedPreference(context);
-                            Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(builder: (context) => const LoginScreen()),
-                                ModalRoute.withName('/'));
+                            Navigator.pushAndRemoveUntil(context,
+                                MaterialPageRoute(builder: (context) => const LoginScreen()), ModalRoute.withName('/'));
                           },
                           child: Container(
                             margin: const EdgeInsets.symmetric(horizontal: 18),
@@ -347,10 +362,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       borderRadius: BorderRadius.circular(100),
                                       border: Border.all(width: 8, color: Colors.white),
                                       boxShadow: [
-                                        BoxShadow(
-                                            color: Colors.grey.shade500,
-                                            blurRadius: 4.0,
-                                            spreadRadius: 1.0),
+                                        BoxShadow(color: Colors.grey.shade500, blurRadius: 4.0, spreadRadius: 1.0),
                                       ],
                                     ),
                                     child: CachedNetworkImage(

@@ -6,6 +6,8 @@ import 'package:svtvs/ui/category_dashboard/response/category_response.dart';
 import 'package:svtvs/ui/login_screen/response/login_response.dart';
 import 'package:svtvs/ui/signup_screen/response/signup_response.dart';
 import 'package:svtvs/ui/update_profile/response/profile_details_response.dart';
+import 'package:svtvs/utility/constants.dart';
+import 'package:svtvs/utility/shared_prefernce.dart';
 
 class ApiRepository {
   static final ApiRepository repository = ApiRepository.internal();
@@ -69,21 +71,21 @@ class ApiRepository {
     }
   }
 
-  Future<ProfileDetailsResponse> profileDetailsUpdate() async {
-    try {
-      Response res = await dio.get(EndPoint.updateProfile);
-      ProfileDetailsResponse response =
-          ProfileDetailsResponse.fromJson(res.toString());
+  Future<UserDetailsResponse> getUserDetails() async {
+    // try {
+      String token = await SharedPref.getStringPreference(Constant.authKey);
+      Response res = await dio.post(EndPoint.userDetails,data:"Bearer $token");
+      UserDetailsResponse response = UserDetailsResponse.fromJson(res.toString());
       return response;
-    } catch (error) {
-      String message = "";
-      if (error is DioError) {
-        ServerError e = ServerError.withError(error: error);
-        message = e.getErrorMessage();
-      } else {
-        message = "Something Went wrong";
-      }
-      return ProfileDetailsResponse(error: false, message: message, userId: '');
-    }
+    // } catch (error) {
+    //   String message = "";
+    //   if (error is DioError) {
+    //     ServerError e = ServerError.withError(error: error);
+    //     message = e.getErrorMessage();
+    //   } else {
+    //     message = "Something Went wrong";
+    //   }
+    //   return UserDetailsResponse(error: false, message: message);
+    // }
   }
 }

@@ -152,11 +152,22 @@ class _CategoryDashBoardState extends State<CategoryDashBoard> {
                       child: SizedBox(
                         height: MediaQuery.of(context).size.height * 0.26,
                         width: MediaQuery.of(context).size.width,
-                        child: AspectRatio(
-                          aspectRatio: 16 / 9,
-                          child: _ytbPlayerController != null
-                              ? YoutubePlayerIFrame(controller: _ytbPlayerController)
-                              : Center(child: CircularProgressIndicator()),
+                        child:  Stack(
+                          children: [
+                            Image.asset(
+                              "assets/images/banner-category.jpg",
+                              fit: BoxFit.cover,
+                            ),
+                            Positioned(
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Image.asset(
+                                  "assets/images/youtube-icon.png",
+                                  height: 40,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),

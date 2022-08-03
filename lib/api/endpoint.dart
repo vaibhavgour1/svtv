@@ -4,7 +4,7 @@ class EndPoint {
   static const register = "signup";
   static const forgotPassword = "forgot";
   static const resetPassword = "passwordreset";
-  static const updateProfile = "update_profile";
+  static const userDetails = "userdetails";
   static const updateProfileImage = "update_profile_image";
   static const getUserDetails = "userdetails";
   static const getCategories = "categories";

@@ -52,7 +52,7 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Container(
       height: height,
       width: width,
-      color: AppColor.colorPrimary,
+      color: Colors.white,
     ));
   }
 }

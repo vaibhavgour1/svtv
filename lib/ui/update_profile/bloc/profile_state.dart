@@ -9,6 +9,8 @@ class ProfileInitialState extends ProfileState {}
 
 class ProfileLoadingState extends ProfileState {}
 
+class GetProfileDetailsState extends ProfileState {}
+
 class ProfileImageUploadState extends ProfileState {
   final String message;
 

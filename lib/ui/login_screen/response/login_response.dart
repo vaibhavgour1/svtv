@@ -11,8 +11,7 @@ class LoginResponse {
   String message;
   UserData? userData;
 
-  factory LoginResponse.fromJson(String str) =>
-      LoginResponse.fromMap(json.decode(str));
+  factory LoginResponse.fromJson(String str) => LoginResponse.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
@@ -30,7 +29,8 @@ class LoginResponse {
                 country: "",
                 ageGroup: "",
                 dateOfBirth: "",
-                profileImage: "")
+                profileImage: "",
+                authKey: "")
             : UserData.fromMap(json["user_id"]),
       );
 
@@ -53,6 +53,7 @@ class UserData {
     required this.ageGroup,
     required this.dateOfBirth,
     required this.profileImage,
+    required this.authKey,
   });
 
   String id;
@@ -65,6 +66,7 @@ class UserData {
   String ageGroup;
   String dateOfBirth;
   String profileImage;
+  String authKey;
 
   factory UserData.fromJson(String str) => UserData.fromMap(json.decode(str));
 
@@ -79,12 +81,9 @@ class UserData {
         state: json["state"] == null ? "" : json["state"].toString(),
         country: json["country"] == null ? "" : json["country"].toString(),
         ageGroup: json["age_group"] == null ? "" : json["age_group"].toString(),
-        dateOfBirth: json["date_of_birth"] == null
-            ? ""
-            : json["date_of_birth"].toString(),
-        profileImage: json["profile_image"] == null
-            ? ""
-            : json["profile_image"].toString(),
+        dateOfBirth: json["date_of_birth"] == null ? "" : json["date_of_birth"].toString(),
+        profileImage: json["profile_image"] == null ? "" : json["profile_image"].toString(),
+        authKey: json["auth_key"] == null ? "" : json["auth_key"].toString(),
       );
 
   Map<String, dynamic> toMap() => {
@@ -98,5 +97,6 @@ class UserData {
         "age_group": ageGroup,
         "date_of_birth": dateOfBirth,
         "profile_image": profileImage == null ? null : profileImage,
+        "auth_key": authKey == null ? null : authKey,
       };
 }

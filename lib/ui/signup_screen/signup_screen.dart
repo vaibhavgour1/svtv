@@ -406,10 +406,10 @@ class _SignupScreenState extends State<SignupScreen> {
                                   input['email'] = emailCtr.text;
                                   input['mobile'] = phoneCtr.text;
                                   input['password'] = confPassCtr.text;
-                                  // input['country'] = countryCtr.text;
-                                  // input['state'] = stateCtr.text;
-                                  // input['city'] = cityCtr.text;
-                                  // input['age'] = ageGroupCtr.text;
+                                  input['country'] = countryCtr.text;
+                                  input['state'] = stateCtr.text;
+                                  input['city'] = cityCtr.text;
+                                  input['age_group'] = ageGroupCtr.text;
 
                                   signupBloc.add(UserSignupEvent(input: input));
                                 }

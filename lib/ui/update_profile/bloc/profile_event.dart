@@ -14,11 +14,4 @@ class ProfileImageEvent extends ProfileEvent {
   List<Object?> get props => [input];
 }
 
-class ProfileDetailsEvent extends ProfileEvent {
-  final Map input;
-
-  ProfileDetailsEvent({required this.input});
-
-  @override
-  List<Object?> get props => [input];
-}
+class GetProfileDetailsEvent extends ProfileEvent {}

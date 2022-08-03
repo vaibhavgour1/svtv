@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:svtvs/api/network.dart';
@@ -28,6 +29,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             Constant.userEmail, response.userData!.email);
         SharedPref.setStringPreference(
             Constant.userMobile, response.userData!.mobileNo);
+        SharedPref.setStringPreference(
+            Constant.authKey, response.userData!.authKey);
+        log("Response= > $response");
         emit(LoginSuccessState(userData: response.userData!));
       } else {
         emit(LoginFailureState(message: response.message));
