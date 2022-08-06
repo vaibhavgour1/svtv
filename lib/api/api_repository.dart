@@ -1,8 +1,12 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:svtvs/api/endpoint.dart';
 import 'package:svtvs/api/server_error.dart';
 import 'package:svtvs/main.dart';
 import 'package:svtvs/ui/category_dashboard/response/category_response.dart';
+import 'package:svtvs/ui/catrgory_screen/response/video_list_response.dart';
+import 'package:svtvs/ui/forgot_password/response/forgot_password_response.dart';
 import 'package:svtvs/ui/login_screen/response/login_response.dart';
 import 'package:svtvs/ui/signup_screen/response/signup_response.dart';
 import 'package:svtvs/ui/update_profile/response/profile_details_response.dart';
@@ -54,6 +58,24 @@ class ApiRepository {
     }
   }
 
+  Future<ForgotPasswordResponse> forgotPassword(Map input) async {
+    try {
+      FormData formData = FormData.fromMap(input as Map<String, dynamic>);
+      Response res = await dio.post(EndPoint.forgotPassword, data: formData);
+      ForgotPasswordResponse response = ForgotPasswordResponse.fromJson(res.toString());
+      return response;
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Something Went wrong";
+      }
+      return ForgotPasswordResponse(error: false, message: message);
+    }
+  }
+
   Future<CategoryResponse> getCategories() async {
     try {
       Response res = await dio.get(EndPoint.getCategories);
@@ -71,21 +93,39 @@ class ApiRepository {
     }
   }
 
-  Future<UserDetailsResponse> getUserDetails() async {
-    // try {
-      String token = await SharedPref.getStringPreference(Constant.authKey);
-      Response res = await dio.post(EndPoint.userDetails,data:"Bearer $token");
-      UserDetailsResponse response = UserDetailsResponse.fromJson(res.toString());
+  Future<VideoListResponse> getVideoList(Map input) async {
+    try {
+      FormData formData = FormData.fromMap(input as Map<String, dynamic>);
+      Response res = await dio.post(EndPoint.getVideoList, data: formData);
+      VideoListResponse response = VideoListResponse.fromJson(res.toString());
       return response;
-    // } catch (error) {
-    //   String message = "";
-    //   if (error is DioError) {
-    //     ServerError e = ServerError.withError(error: error);
-    //     message = e.getErrorMessage();
-    //   } else {
-    //     message = "Something Went wrong";
-    //   }
-    //   return UserDetailsResponse(error: false, message: message);
-    // }
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Something Went wrong";
+      }
+      return VideoListResponse(error: false, message: message);
+    }
+  }
+
+  Future<UserDetailsResponse> getUserDetails() async {
+    try {
+    String token = await SharedPref.getStringPreference(Constant.authKey);
+    Response res = await dio.post(EndPoint.userDetails, data: "Bearer $token");
+    UserDetailsResponse response = UserDetailsResponse.fromJson(res.toString());
+    return response;
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Something Went wrong";
+      }
+      return UserDetailsResponse(error: false, message: message);
+    }
   }
 }

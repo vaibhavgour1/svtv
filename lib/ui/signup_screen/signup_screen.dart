@@ -5,10 +5,12 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:svtvs/ui/forgot_password/forgot_password_screen.dart';
 import 'package:svtvs/ui/login_screen/login_screen.dart';
 import 'package:svtvs/ui/signup_screen/bloc/signup_bloc.dart';
 import 'package:svtvs/ui/signup_screen/bloc/signup_event.dart';
 import 'package:svtvs/ui/signup_screen/bloc/signup_state.dart';
+import 'package:svtvs/utility/colors.dart';
 import 'package:svtvs/widgets/tringle_background.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -100,7 +102,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(3),
                               borderSide: const BorderSide(
-                                  color: Colors.blue, width: 1),
+                                  color: Colors.grey, width: 1),
                             ),
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(3),
@@ -117,18 +119,20 @@ class _SignupScreenState extends State<SignupScreen> {
                         height: 45,
                         child: TextFormField(
                           controller: phoneCtr,
+                          maxLength: 10,
                           decoration: InputDecoration(
                             fillColor: Colors.white,
                             hintText: "Phone Number",
                             hintStyle:
                                 TextStyle(color: Colors.grey, fontSize: 13),
+                            counterText: "",
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(3),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(3),
                               borderSide: const BorderSide(
-                                  color: Colors.blue, width: 1),
+                                  color: Colors.grey, width: 1),
                             ),
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(3),
@@ -156,7 +160,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(3),
                               borderSide: const BorderSide(
-                                  color: Colors.blue, width: 1),
+                                  color: Colors.grey, width: 1),
                             ),
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(3),
@@ -184,7 +188,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(3),
                               borderSide: const BorderSide(
-                                  color: Colors.blue, width: 1),
+                                  color: Colors.grey, width: 1),
                             ),
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(3),
@@ -212,7 +216,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(3),
                               borderSide: const BorderSide(
-                                  color: Colors.blue, width: 1),
+                                  color: Colors.grey, width: 1),
                             ),
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(3),
@@ -245,7 +249,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(3),
                                     borderSide: const BorderSide(
-                                        color: Colors.blue, width: 1),
+                                        color: Colors.grey, width: 1),
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(3),
@@ -269,7 +273,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(3),
                                     borderSide: const BorderSide(
-                                        color: Colors.blue, width: 1),
+                                        color: Colors.grey, width: 1),
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(3),
@@ -305,7 +309,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(3),
                                     borderSide: const BorderSide(
-                                        color: Colors.blue, width: 1),
+                                        color: Colors.grey, width: 1),
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(3),
@@ -329,7 +333,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(3),
                                     borderSide: const BorderSide(
-                                        color: Colors.blue, width: 1),
+                                        color: Colors.grey, width: 1),
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(3),
@@ -348,10 +352,12 @@ class _SignupScreenState extends State<SignupScreen> {
                         listener: (context, state) {
                           log("State  $state");
                           if (state is SignupSuccessState) {
-                            Navigator.push(
+                            Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const LoginScreen()));
+                                    builder: (context) =>
+                                    const LoginScreen()),
+                                    (Route<dynamic> route) => false);
                             Fluttertoast.showToast(msg: "Login Success");
                           }
                           if (state is SignupFailureState) {
@@ -419,7 +425,10 @@ class _SignupScreenState extends State<SignupScreen> {
                                     const EdgeInsets.symmetric(horizontal: 18),
                                 height: 40,
                                 width: MediaQuery.of(context).size.width,
-                                color: Colors.green,
+                                decoration:  BoxDecoration(
+                                  color: AppColor.buttonColor,
+                                  borderRadius: BorderRadius.circular(2),
+                                ),
                                 child: Center(
                                   child: Text(
                                     "Register",
@@ -433,7 +442,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         },
                       ),
                       SizedBox(
-                        height: 40,
+                        height: 24,
                       ),
                       Container(
                         margin: const EdgeInsets.symmetric(horizontal: 18),
@@ -441,11 +450,17 @@ class _SignupScreenState extends State<SignupScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                        const ForgotPasswordScreen()));
+                              },
                               child: Text(
                                 "Forgot password?",
                                 style:
-                                    TextStyle(color: Colors.blue, fontSize: 12),
+                                    TextStyle(color: AppColor.colorPrimary, fontSize: 12),
                               ),
                             ),
                             InkWell(
@@ -457,7 +472,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                             const LoginScreen()));
                               },
                               child: Text(
-                                "Signin",
+                                "Sign In",
                                 style:
                                     TextStyle(color: Colors.grey, fontSize: 12),
                               ),

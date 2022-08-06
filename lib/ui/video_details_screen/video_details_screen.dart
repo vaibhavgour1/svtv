@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:svtvs/ui/catrgory_screen/category_screen.dart';
+import 'package:svtvs/ui/update_profile/update_profile_screen.dart';
 import 'package:svtvs/widgets/tringle_background.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
@@ -42,7 +43,10 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
               padding: const EdgeInsets.only(left: 10)),
           actions: [
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => const ProfileScreen()));
+              },
               child: Container(
                 margin: const EdgeInsets.only(right: 12),
                 child: Image.asset(

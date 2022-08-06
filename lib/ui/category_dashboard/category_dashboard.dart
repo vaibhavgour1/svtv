@@ -6,6 +6,7 @@ import 'package:svtvs/ui/category_dashboard/bloc/category_state.dart';
 import 'package:svtvs/ui/category_dashboard/response/category_response.dart';
 import 'package:svtvs/ui/catrgory_screen/category_screen.dart';
 import 'package:svtvs/ui/update_profile/update_profile_screen.dart';
+import 'package:svtvs/utility/colors.dart';
 import 'package:svtvs/widgets/tringle_background.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
@@ -18,30 +19,19 @@ class CategoryDashBoard extends StatefulWidget {
 
 class _CategoryDashBoardState extends State<CategoryDashBoard> {
   TextEditingController searchCtr = TextEditingController();
-  List<CategoryList> categoryList = [];
-  List<String> imageList = [
-    "assets/images/atheletics-icon.png",
-    "assets/images/football-icon.png",
-    "assets/images/cricket-icon.png",
-    "assets/images/netball-icon.png",
-    "assets/images/basketball-icon.png",
-    "assets/images/soccer-icon.png",
-    "assets/images/atheletics-icon.png",
-    "assets/images/hockey-icon.png",
-    "assets/images/cycling-icon.png",
+
+  List<CategoryModel> categoryList = [
+    CategoryModel(id: 1, name: "Athletics", image: "assets/images/atheletics-icon.png"),
+    CategoryModel(id: 2, name: "Basketball", image: "assets/images/basketball-icon.png"),
+    CategoryModel(id: 3, name: "Boxing", image: "assets/images/atheletics-icon.png"),
+    CategoryModel(id: 4, name: "Cricket", image: "assets/images/cricket-icon.png"),
+    CategoryModel(id: 5, name: "Cycling", image: "assets/images/cycling-icon.png"),
+    CategoryModel(id: 6, name: "Football", image: "assets/images/football-icon.png"),
+    CategoryModel(id: 7, name: "Hockey", image: "assets/images/hockey-icon.png"),
+    CategoryModel(id: 8, name: "Netball", image: "assets/images/netball-icon.png"),
+    CategoryModel(id: 9, name: "Soccer", image: "assets/images/soccer-icon.png"),
   ];
 
-  List<String> categoryNames = [
-    "Athletics",
-    "Football",
-    "Cricket",
-    "Netball",
-    "Basketball",
-    "Rugby",
-    "Boxing",
-    "Hockey",
-    "Cycling",
-  ];
   YoutubePlayerController _ytbPlayerController = YoutubePlayerController(
     initialVideoId: 'K18cpp_-gP8',
     params: YoutubePlayerParams(
@@ -63,23 +53,26 @@ class _CategoryDashBoardState extends State<CategoryDashBoard> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          titleSpacing: 8,
           centerTitle: false,
-          backgroundColor: Colors.pink.shade700,
-          title: Text(
-            "Category",
-            style: TextStyle(fontSize: 14),
+          automaticallyImplyLeading: false,
+          backgroundColor: AppColor.colorPrimary,
+          title: Row(
+            children: const [
+              Icon(Icons.arrow_back_ios_new_rounded, size: 15),
+              SizedBox(
+                width: 3,
+              ),
+              Text(
+                "Category",
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+              ),
+            ],
           ),
-          leadingWidth: 14,
-          leading: IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.arrow_back_ios_new_rounded),
-              iconSize: 15,
-              padding: const EdgeInsets.only(left: 10)),
           actions: [
             GestureDetector(
               onTap: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => const ProfileScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfileScreen()));
               },
               child: Container(
                 margin: const EdgeInsets.only(right: 12),
@@ -119,8 +112,7 @@ class _CategoryDashBoardState extends State<CategoryDashBoard> {
                       borderSide: const BorderSide(color: Colors.blue, width: 1),
                     ),
                     enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(3),
-                        borderSide: BorderSide(color: Colors.grey, width: 1)),
+                        borderRadius: BorderRadius.circular(3), borderSide: BorderSide(color: Colors.grey, width: 1)),
                   ),
                 ),
               ),
@@ -132,7 +124,7 @@ class _CategoryDashBoardState extends State<CategoryDashBoard> {
             ClipPath(
               clipper: TriangleBackground(),
               child: Container(
-                color: Colors.pink.shade700,
+                color: AppColor.colorPrimary,
               ),
             ),
             Positioned(
@@ -142,8 +134,7 @@ class _CategoryDashBoardState extends State<CategoryDashBoard> {
               right: 0,
               child: Container(
                 margin: const EdgeInsets.only(top: 14, bottom: 50, left: 14, right: 14),
-                decoration:
-                    BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
+                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
@@ -152,7 +143,7 @@ class _CategoryDashBoardState extends State<CategoryDashBoard> {
                       child: SizedBox(
                         height: MediaQuery.of(context).size.height * 0.26,
                         width: MediaQuery.of(context).size.width,
-                        child:  Stack(
+                        child: Stack(
                           children: [
                             Image.asset(
                               "assets/images/banner-category.jpg",
@@ -177,8 +168,7 @@ class _CategoryDashBoardState extends State<CategoryDashBoard> {
                         alignment: Alignment.centerLeft,
                         child: Text(
                           "  Popular Cateory",
-                          style: TextStyle(
-                              color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
+                          style: TextStyle(color: AppColor.textHeadingColor, fontSize: 14, fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),
@@ -198,16 +188,21 @@ class _CategoryDashBoardState extends State<CategoryDashBoard> {
                             return Column(
                               children: [
                                 InkWell(
-                                  onTap:(){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>CategoryListScreen()));
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => CategoryListScreen(
+                                                  categoryId: categoryList[index].id,
+                                                )));
                                   },
                                   child: CircleAvatar(
                                     radius: MediaQuery.of(context).size.width * 0.14,
-                                    backgroundColor: Colors.pink.shade700,
+                                    backgroundColor: AppColor.colorPrimary,
                                     child: Padding(
                                       padding: const EdgeInsets.all(25),
                                       child: Image.asset(
-                                        imageList[index],
+                                        categoryList[index].image,
                                         fit: BoxFit.contain,
                                       ),
                                     ),
@@ -217,8 +212,9 @@ class _CategoryDashBoardState extends State<CategoryDashBoard> {
                                   height: 8,
                                 ),
                                 Text(
-                                  categoryNames[index],
-                                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                                  categoryList[index].name,
+                                  style: TextStyle(
+                                      color: AppColor.textBodyColor, fontSize: 12, fontWeight: FontWeight.w500),
                                 )
                               ],
                             );
@@ -234,3 +230,16 @@ class _CategoryDashBoardState extends State<CategoryDashBoard> {
     );
   }
 }
+
+class CategoryModel {
+  CategoryModel({
+    required this.id,
+    required this.name,
+    required this.image,
+  });
+
+  int id;
+  String name;
+  String image;
+}
+//

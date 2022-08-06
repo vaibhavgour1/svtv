@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:svtvs/ui/category_dashboard/category_dashboard.dart';
+import 'package:svtvs/ui/forgot_password/forgot_password_screen.dart';
 import 'package:svtvs/ui/login_screen/bloc/login_bloc.dart';
 import 'package:svtvs/ui/login_screen/bloc/login_event.dart';
 import 'package:svtvs/ui/login_screen/bloc/login_state.dart';
 import 'package:svtvs/ui/signup_screen/signup_screen.dart';
+import 'package:svtvs/utility/colors.dart';
 import 'package:svtvs/widgets/tringle_background.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -21,11 +23,9 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
-  static RegExp emailRegex =
-      RegExp(r'^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z])$');
+  static RegExp emailRegex = RegExp(r'^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z])$');
 
-  static RegExp passwordRegex =
-      RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+  static RegExp passwordRegex = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
   LoginBloc loginBloc = LoginBloc();
 
   @override
@@ -40,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ClipPath(
               clipper: TriangleBackground(),
               child: Container(
-                color: Colors.pink.shade700,
+                color: AppColor.colorPrimary,
               ),
             ),
             Positioned(
@@ -49,11 +49,9 @@ class _LoginScreenState extends State<LoginScreen> {
               left: 0,
               right: 0,
               child: Container(
-                margin: const EdgeInsets.only(
-                    top: 14, bottom: 40, left: 14, right: 14),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8)),
+                margin: const EdgeInsets.only(top: 14, bottom: 40, left: 14, right: 14),
+                clipBehavior: Clip.antiAlias,
+                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -64,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.height * 0.50,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       ),
                       Container(
@@ -75,20 +73,17 @@ class _LoginScreenState extends State<LoginScreen> {
                           decoration: InputDecoration(
                             fillColor: Colors.white,
                             hintText: "Enter your username",
-                            hintStyle:
-                                TextStyle(color: Colors.grey, fontSize: 13),
+                            hintStyle: TextStyle(color: Colors.grey, fontSize: 13),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(3),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(3),
-                              borderSide: const BorderSide(
-                                  color: Colors.blue, width: 1),
+                              borderSide: const BorderSide(color: Colors.grey, width: 1),
                             ),
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(3),
-                                borderSide:
-                                    BorderSide(color: Colors.grey, width: 1)),
+                                borderSide: BorderSide(color: Colors.grey, width: 1)),
                           ),
                         ),
                       ),
@@ -103,37 +98,31 @@ class _LoginScreenState extends State<LoginScreen> {
                           decoration: InputDecoration(
                             fillColor: Colors.white,
                             hintText: "Enter your password",
-                            hintStyle:
-                                TextStyle(color: Colors.grey, fontSize: 13),
+                            hintStyle: TextStyle(color: Colors.grey, fontSize: 13),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(3),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(3),
-                              borderSide: const BorderSide(
-                                  color: Colors.blue, width: 1),
+                              borderSide: const BorderSide(color: Colors.grey, width: 1),
                             ),
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(3),
-                                borderSide:
-                                    BorderSide(color: Colors.grey, width: 1)),
+                                borderSide: BorderSide(color: Colors.grey, width: 1)),
                           ),
                         ),
                       ),
                       SizedBox(
                         height: 30,
                       ),
-                      BlocConsumer<LoginBloc, LoginState>(
-                          listener: (context, state) {
+                      BlocConsumer<LoginBloc, LoginState>(listener: (context, state) {
                         if (state is LoginSuccessState) {
                           Fluttertoast.showToast(msg: "Login Success");
 
                           Navigator.pushAndRemoveUntil(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const CategoryDashBoard()),
-                                  (Route<dynamic> route) => false);
+                              MaterialPageRoute(builder: (context) => const CategoryDashBoard()),
+                              (Route<dynamic> route) => false);
                         }
                         if (state is LoginFailureState) {
                           Fluttertoast.showToast(msg: state.message);
@@ -147,15 +136,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         return InkWell(
                             onTap: () {
                               if (emailController.text.isEmpty) {
-                                Fluttertoast.showToast(
-                                    msg: "Username is required");
-                              } else if (!EmailValidator.validate(
-                                  emailController.text)) {
-                                Fluttertoast.showToast(
-                                    msg: "Enter valid username");
+                                Fluttertoast.showToast(msg: "Username is required");
+                              } else if (!EmailValidator.validate(emailController.text)) {
+                                Fluttertoast.showToast(msg: "Enter valid username");
                               } else if (passController.text.isEmpty) {
-                                Fluttertoast.showToast(
-                                    msg: "Password is required");
+                                Fluttertoast.showToast(msg: "Password is required");
                               }
                               // else if (!passwordRegex
                               //     .hasMatch(passController.text)) {
@@ -171,11 +156,13 @@ class _LoginScreenState extends State<LoginScreen> {
                               }
                             },
                             child: Container(
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 18),
+                              margin: const EdgeInsets.symmetric(horizontal: 18),
                               height: 40,
                               width: MediaQuery.of(context).size.width,
-                              color: Colors.blue,
+                              decoration:  BoxDecoration(
+                                color: AppColor.buttonColor,
+                                borderRadius: BorderRadius.circular(2),
+                              ),
                               child: Center(
                                 child: Text(
                                   "Signin",
@@ -197,26 +184,21 @@ class _LoginScreenState extends State<LoginScreen> {
                           children: [
                             InkWell(
                               onTap: () {
-                                // Navigator.push(context, MaterialPageRoute(builder: (context)=> const ForgotPasswordScreen()));
+                                Navigator.push(context, MaterialPageRoute(builder:
+                                    (context)=> const ForgotPasswordScreen()));
                               },
                               child: Text(
                                 "Forgot password?",
-                                style:
-                                    TextStyle(color: Colors.blue, fontSize: 12),
+                                style: TextStyle(color: AppColor.colorPrimary, fontSize: 12),
                               ),
                             ),
                             InkWell(
                               onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SignupScreen()));
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => const SignupScreen()));
                               },
                               child: Text(
-                                "Signup",
-                                style:
-                                    TextStyle(color: Colors.grey, fontSize: 12),
+                                "Sign Up",
+                                style: TextStyle(color: Colors.grey, fontSize: 12),
                               ),
                             )
                           ],

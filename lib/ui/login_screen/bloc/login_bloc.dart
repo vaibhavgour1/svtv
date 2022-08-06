@@ -21,16 +21,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       LoginResponse response = await repository.loginUser(event.input);
       if (!response.error) {
         SharedPref.setBooleanPreference(Constant.isLoggedIn, true);
-        SharedPref.setIntegerPreference(
-            Constant.userId, int.parse(response.userData!.id));
-        SharedPref.setStringPreference(
-            Constant.userName, response.userData!.name);
-        SharedPref.setStringPreference(
-            Constant.userEmail, response.userData!.email);
-        SharedPref.setStringPreference(
-            Constant.userMobile, response.userData!.mobileNo);
-        SharedPref.setStringPreference(
-            Constant.authKey, response.userData!.authKey);
+        SharedPref.setIntegerPreference(Constant.userId, int.parse(response.userData!.id));
+        SharedPref.setStringPreference(Constant.userName, response.userData!.name);
+        SharedPref.setStringPreference(Constant.userEmail, response.userData!.email);
+        SharedPref.setStringPreference(Constant.userMobile, response.userData!.mobileNo);
+        SharedPref.setStringPreference(Constant.authKey, response.userData!.authKey);
+        baseOptions.headers.addAll({"Authorization": "Bearer ${response.userData!.authKey}"});
         log("Response= > $response");
         emit(LoginSuccessState(userData: response.userData!));
       } else {

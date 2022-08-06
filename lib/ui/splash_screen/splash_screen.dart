@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:svtvs/main.dart';
 import 'package:svtvs/ui/category_dashboard/category_dashboard.dart';
 import 'package:svtvs/ui/login_screen/login_screen.dart';
 import 'package:svtvs/ui/signup_screen/signup_screen.dart';
@@ -23,23 +25,20 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   navigation() async {
-    bool isLoggedIn =
-        await SharedPref.getBooleanPreference(Constant.isLoggedIn);
+    bool isLoggedIn = await SharedPref.getBooleanPreference(Constant.isLoggedIn);
+    String authKey = await SharedPref.getStringPreference(Constant.authKey);
+    log("Auth key $authKey");
     if (isLoggedIn) {
+      baseOptions.headers.addAll({"Authorization": "Bearer $authKey"});
       Future.delayed(
           Duration(seconds: 1),
-              () => Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => const CategoryDashBoard()),
-              (Route<dynamic> route) => false));
-
+          () => Navigator.pushAndRemoveUntil(context,
+              MaterialPageRoute(builder: (context) => const CategoryDashBoard()), (Route<dynamic> route) => false));
     } else {
       Future.delayed(
           Duration(seconds: 1),
           () => Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => const LoginScreen()),
-                  (Route<dynamic> route) => false));
+              context, MaterialPageRoute(builder: (context) => const LoginScreen()), (Route<dynamic> route) => false));
     }
   }
 
