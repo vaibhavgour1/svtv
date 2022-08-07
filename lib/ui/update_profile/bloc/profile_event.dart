@@ -5,13 +5,22 @@ class ProfileEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class ProfileImageEvent extends ProfileEvent {
+class GetProfileDetailsEvent extends ProfileEvent {}
+
+class ProfileImageUploadEvent extends ProfileEvent {
   final Map input;
 
-  ProfileImageEvent({required this.input});
+  ProfileImageUploadEvent({required this.input});
 
   @override
   List<Object?> get props => [input];
 }
 
-class GetProfileDetailsEvent extends ProfileEvent {}
+class ProfileDetailsUploadEvent extends ProfileEvent {
+  final Map input;
+
+  ProfileDetailsUploadEvent({required this.input});
+
+  @override
+  List<Object?> get props => [input];
+}

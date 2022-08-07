@@ -33,7 +33,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         emit(LoginFailureState(message: response.message));
       }
     } else {
-      emit(LoginFailureState(message: "No Internet Connection!"));
+      emit(LoginFailureState(message: Constant.networkAlert));
     }
   }
 }

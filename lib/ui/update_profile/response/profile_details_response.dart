@@ -9,7 +9,7 @@ class UserDetailsResponse {
 
   bool error;
   String message;
-  Info? info;
+  UserInfo? info;
 
   factory UserDetailsResponse.fromJson(String str) => UserDetailsResponse.fromMap(json.decode(str));
 
@@ -18,7 +18,7 @@ class UserDetailsResponse {
   factory UserDetailsResponse.fromMap(Map<String, dynamic> json) => UserDetailsResponse(
         error: json["error"] == null ? false : json["error"],
         message: json["message"] == null ? "" : json["message"],
-        info: json["info"] == null ? null : Info.fromMap(json["info"]),
+        info: json["info"] == null ? null : UserInfo.fromMap(json["info"]),
       );
 
   Map<String, dynamic> toMap() => {
@@ -28,8 +28,8 @@ class UserDetailsResponse {
       };
 }
 
-class Info {
-  Info({
+class UserInfo {
+  UserInfo({
     required this.id,
     required this.name,
     required this.email,
@@ -51,11 +51,11 @@ class Info {
   String mobileNo;
   String profileImage;
 
-  factory Info.fromJson(String str) => Info.fromMap(json.decode(str));
+  factory UserInfo.fromJson(String str) => UserInfo.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory Info.fromMap(Map<String, dynamic> json) => Info(
+  factory UserInfo.fromMap(Map<String, dynamic> json) => UserInfo(
         id: json["id"] == null ? "" : json["id"].toString(),
         name: json["name"] == null ? "" : json["name"].toString(),
         email: json["email"] == null ? "" : json["email"].toString(),

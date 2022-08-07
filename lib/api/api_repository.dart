@@ -10,6 +10,10 @@ import 'package:svtvs/ui/forgot_password/response/forgot_password_response.dart'
 import 'package:svtvs/ui/login_screen/response/login_response.dart';
 import 'package:svtvs/ui/signup_screen/response/signup_response.dart';
 import 'package:svtvs/ui/update_profile/response/profile_details_response.dart';
+import 'package:svtvs/ui/update_profile/response/profile_details_update_response.dart';
+import 'package:svtvs/ui/video_details_screen/response/video_comments_response.dart';
+import 'package:svtvs/ui/video_details_screen/response/video_details_response.dart';
+import 'package:svtvs/ui/video_details_screen/response/video_like_response.dart';
 import 'package:svtvs/utility/constants.dart';
 import 'package:svtvs/utility/shared_prefernce.dart';
 
@@ -111,12 +115,66 @@ class ApiRepository {
     }
   }
 
+  Future<VideoDetailsResponse> getVideoDetails(Map input) async {
+    try {
+      FormData formData = FormData.fromMap(input as Map<String, dynamic>);
+      Response res = await dio.post(EndPoint.getVideoDetails, data: formData);
+      VideoDetailsResponse response = VideoDetailsResponse.fromJson(res.toString());
+      return response;
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Something Went wrong";
+      }
+      return VideoDetailsResponse(error: false, message: message);
+    }
+  }
+
+  Future<VideoLikesResponse> likeVideo(Map input) async {
+    try {
+      FormData formData = FormData.fromMap(input as Map<String, dynamic>);
+      Response res = await dio.post(EndPoint.likeVideo, data: formData);
+      VideoLikesResponse response = VideoLikesResponse.fromJson(res.toString());
+      return response;
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Something Went wrong";
+      }
+      return VideoLikesResponse(error: false, message: message, info: "");
+    }
+  }
+
+  Future<VideoCommentsResponse> getComments(Map input) async {
+    try {
+      FormData formData = FormData.fromMap(input as Map<String, dynamic>);
+      Response res = await dio.post(EndPoint.getCommentList, data: formData);
+      VideoCommentsResponse response = VideoCommentsResponse.fromJson(res.toString());
+      return response;
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Something Went wrong";
+      }
+      return VideoCommentsResponse(error: false, message: message);
+    }
+  }
+
   Future<UserDetailsResponse> getUserDetails() async {
     try {
-    String token = await SharedPref.getStringPreference(Constant.authKey);
-    Response res = await dio.post(EndPoint.userDetails, data: "Bearer $token");
-    UserDetailsResponse response = UserDetailsResponse.fromJson(res.toString());
-    return response;
+      String token = await SharedPref.getStringPreference(Constant.authKey);
+      Response res = await dio.post(EndPoint.userDetails, data: "Bearer $token");
+      UserDetailsResponse response = UserDetailsResponse.fromJson(res.toString());
+      return response;
     } catch (error) {
       String message = "";
       if (error is DioError) {
@@ -126,6 +184,24 @@ class ApiRepository {
         message = "Something Went wrong";
       }
       return UserDetailsResponse(error: false, message: message);
+    }
+  }
+
+  Future<UpdateProfileDetailsResponse> updateUserProfile(Map input) async {
+    try {
+      FormData formData = FormData.fromMap(input as Map<String, dynamic>);
+      Response res = await dio.post(EndPoint.updateProfileDetails, data: formData);
+      UpdateProfileDetailsResponse response = UpdateProfileDetailsResponse.fromJson(res.toString());
+      return response;
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Something Went wrong";
+      }
+      return UpdateProfileDetailsResponse(error: false, message: message);
     }
   }
 }

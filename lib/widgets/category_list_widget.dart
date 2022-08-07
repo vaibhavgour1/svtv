@@ -64,7 +64,7 @@ class _CategoryListWidgetState extends State<CategoryListWidget> {
                     splashColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const VideoDetailsScreen()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) =>  VideoDetailsScreen(videoId: videoList[index].id)));
                     },
                     child: Container(
                       margin: const EdgeInsets.only(bottom: 12),

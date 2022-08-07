@@ -95,6 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 45,
                         child: TextFormField(
                           controller: passController,
+                          obscureText: true,
                           decoration: InputDecoration(
                             fillColor: Colors.white,
                             hintText: "Enter your password",
@@ -130,7 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       }, builder: (context, state) {
                         if (state is LoginLoadingState) {
                           return Center(
-                            child: CircularProgressIndicator(),
+                            child: CircularProgressIndicator(color: AppColor.colorPrimary,),
                           );
                         }
                         return InkWell(

@@ -31,10 +31,8 @@ class _SignupScreenState extends State<SignupScreen> {
   TextEditingController cityCtr = TextEditingController();
   TextEditingController ageGroupCtr = TextEditingController();
   SignupBloc signupBloc = SignupBloc();
-  RegExp emailRegExp =
-      RegExp(r"^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{1,8})$");
-  RegExp passRegExp =
-      RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+  RegExp emailRegExp = RegExp(r"^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{1,8})$");
+  RegExp passRegExp = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
   RegExp mobileRegExp = RegExp(r'(^[0-9]*$)');
 
   @override
@@ -58,8 +56,7 @@ class _SignupScreenState extends State<SignupScreen> {
               left: 0,
               right: 0,
               child: Container(
-                margin: const EdgeInsets.only(
-                    top: 14, bottom: 40, left: 12, right: 12),
+                margin: const EdgeInsets.only(top: 14, bottom: 40, left: 12, right: 12),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(8),
@@ -94,20 +91,17 @@ class _SignupScreenState extends State<SignupScreen> {
                           decoration: InputDecoration(
                             fillColor: Colors.white,
                             hintText: "Full Name",
-                            hintStyle:
-                                TextStyle(color: Colors.grey, fontSize: 13),
+                            hintStyle: TextStyle(color: Colors.grey, fontSize: 13),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(3),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(3),
-                              borderSide: const BorderSide(
-                                  color: Colors.grey, width: 1),
+                              borderSide: const BorderSide(color: Colors.grey, width: 1),
                             ),
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(3),
-                                borderSide:
-                                    BorderSide(color: Colors.grey, width: 1)),
+                                borderSide: BorderSide(color: Colors.grey, width: 1)),
                           ),
                         ),
                       ),
@@ -123,21 +117,18 @@ class _SignupScreenState extends State<SignupScreen> {
                           decoration: InputDecoration(
                             fillColor: Colors.white,
                             hintText: "Phone Number",
-                            hintStyle:
-                                TextStyle(color: Colors.grey, fontSize: 13),
+                            hintStyle: TextStyle(color: Colors.grey, fontSize: 13),
                             counterText: "",
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(3),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(3),
-                              borderSide: const BorderSide(
-                                  color: Colors.grey, width: 1),
+                              borderSide: const BorderSide(color: Colors.grey, width: 1),
                             ),
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(3),
-                                borderSide:
-                                    BorderSide(color: Colors.grey, width: 1)),
+                                borderSide: BorderSide(color: Colors.grey, width: 1)),
                           ),
                         ),
                       ),
@@ -152,20 +143,17 @@ class _SignupScreenState extends State<SignupScreen> {
                           decoration: InputDecoration(
                             fillColor: Colors.white,
                             hintText: "Email Address",
-                            hintStyle:
-                                TextStyle(color: Colors.grey, fontSize: 13),
+                            hintStyle: TextStyle(color: Colors.grey, fontSize: 13),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(3),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(3),
-                              borderSide: const BorderSide(
-                                  color: Colors.grey, width: 1),
+                              borderSide: const BorderSide(color: Colors.grey, width: 1),
                             ),
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(3),
-                                borderSide:
-                                    BorderSide(color: Colors.grey, width: 1)),
+                                borderSide: BorderSide(color: Colors.grey, width: 1)),
                           ),
                         ),
                       ),
@@ -177,23 +165,21 @@ class _SignupScreenState extends State<SignupScreen> {
                         height: 45,
                         child: TextFormField(
                           controller: passCtr,
+                          obscureText: true,
                           decoration: InputDecoration(
                             fillColor: Colors.white,
                             hintText: "Password",
-                            hintStyle:
-                                TextStyle(color: Colors.grey, fontSize: 13),
+                            hintStyle: TextStyle(color: Colors.grey, fontSize: 13),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(3),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(3),
-                              borderSide: const BorderSide(
-                                  color: Colors.grey, width: 1),
+                              borderSide: const BorderSide(color: Colors.grey, width: 1),
                             ),
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(3),
-                                borderSide:
-                                    BorderSide(color: Colors.grey, width: 1)),
+                                borderSide: BorderSide(color: Colors.grey, width: 1)),
                           ),
                         ),
                       ),
@@ -205,23 +191,21 @@ class _SignupScreenState extends State<SignupScreen> {
                         height: 45,
                         child: TextFormField(
                           controller: confPassCtr,
+                          obscureText: true,
                           decoration: InputDecoration(
                             fillColor: Colors.white,
                             hintText: "Confirm Password",
-                            hintStyle:
-                                TextStyle(color: Colors.grey, fontSize: 13),
+                            hintStyle: TextStyle(color: Colors.grey, fontSize: 13),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(3),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(3),
-                              borderSide: const BorderSide(
-                                  color: Colors.grey, width: 1),
+                              borderSide: const BorderSide(color: Colors.grey, width: 1),
                             ),
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(3),
-                                borderSide:
-                                    BorderSide(color: Colors.grey, width: 1)),
+                                borderSide: BorderSide(color: Colors.grey, width: 1)),
                           ),
                         ),
                       ),
@@ -241,20 +225,17 @@ class _SignupScreenState extends State<SignupScreen> {
                                 decoration: InputDecoration(
                                   fillColor: Colors.white,
                                   hintText: "Country",
-                                  hintStyle: TextStyle(
-                                      color: Colors.grey, fontSize: 13),
+                                  hintStyle: TextStyle(color: Colors.grey, fontSize: 13),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(3),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(3),
-                                    borderSide: const BorderSide(
-                                        color: Colors.grey, width: 1),
+                                    borderSide: const BorderSide(color: Colors.grey, width: 1),
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(3),
-                                      borderSide: BorderSide(
-                                          color: Colors.grey, width: 1)),
+                                      borderSide: BorderSide(color: Colors.grey, width: 1)),
                                 ),
                               ),
                             ),
@@ -265,20 +246,17 @@ class _SignupScreenState extends State<SignupScreen> {
                                 decoration: InputDecoration(
                                   fillColor: Colors.white,
                                   hintText: "State/Province",
-                                  hintStyle: TextStyle(
-                                      color: Colors.grey, fontSize: 13),
+                                  hintStyle: TextStyle(color: Colors.grey, fontSize: 13),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(3),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(3),
-                                    borderSide: const BorderSide(
-                                        color: Colors.grey, width: 1),
+                                    borderSide: const BorderSide(color: Colors.grey, width: 1),
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(3),
-                                      borderSide: BorderSide(
-                                          color: Colors.grey, width: 1)),
+                                      borderSide: BorderSide(color: Colors.grey, width: 1)),
                                 ),
                               ),
                             ),
@@ -301,20 +279,17 @@ class _SignupScreenState extends State<SignupScreen> {
                                 decoration: InputDecoration(
                                   fillColor: Colors.white,
                                   hintText: "City Name",
-                                  hintStyle: TextStyle(
-                                      color: Colors.grey, fontSize: 13),
+                                  hintStyle: TextStyle(color: Colors.grey, fontSize: 13),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(3),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(3),
-                                    borderSide: const BorderSide(
-                                        color: Colors.grey, width: 1),
+                                    borderSide: const BorderSide(color: Colors.grey, width: 1),
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(3),
-                                      borderSide: BorderSide(
-                                          color: Colors.grey, width: 1)),
+                                      borderSide: BorderSide(color: Colors.grey, width: 1)),
                                 ),
                               ),
                             ),
@@ -325,20 +300,17 @@ class _SignupScreenState extends State<SignupScreen> {
                                 decoration: InputDecoration(
                                   fillColor: Colors.white,
                                   hintText: "Age Group",
-                                  hintStyle: TextStyle(
-                                      color: Colors.grey, fontSize: 13),
+                                  hintStyle: TextStyle(color: Colors.grey, fontSize: 13),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(3),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(3),
-                                    borderSide: const BorderSide(
-                                        color: Colors.grey, width: 1),
+                                    borderSide: const BorderSide(color: Colors.grey, width: 1),
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(3),
-                                      borderSide: BorderSide(
-                                          color: Colors.grey, width: 1)),
+                                      borderSide: BorderSide(color: Colors.grey, width: 1)),
                                 ),
                               ),
                             ),
@@ -354,10 +326,8 @@ class _SignupScreenState extends State<SignupScreen> {
                           if (state is SignupSuccessState) {
                             Navigator.pushAndRemoveUntil(
                                 context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                    const LoginScreen()),
-                                    (Route<dynamic> route) => false);
+                                MaterialPageRoute(builder: (context) => const LoginScreen()),
+                                (Route<dynamic> route) => false);
                             Fluttertoast.showToast(msg: "Login Success");
                           }
                           if (state is SignupFailureState) {
@@ -367,45 +337,37 @@ class _SignupScreenState extends State<SignupScreen> {
                         builder: (context, state) {
                           if (state is SignupLoadingState) {
                             return Center(
-                              child: CircularProgressIndicator(),
+                              child: CircularProgressIndicator(
+                                color: AppColor.colorPrimary,
+                              ),
                             );
                           }
                           return InkWell(
                               onTap: () {
                                 if (nameCtr.text.isEmpty) {
-                                  Fluttertoast.showToast(
-                                      msg: "Full name is required");
+                                  Fluttertoast.showToast(msg: "Full name is required");
                                 } else if (phoneCtr.text.isEmpty) {
-                                  Fluttertoast.showToast(
-                                      msg: "Mobile number is required");
+                                  Fluttertoast.showToast(msg: "Mobile number is required");
                                 } else if (phoneCtr.text.length < 10) {
-                                  Fluttertoast.showToast(
-                                      msg: "Enter valid mobile number");
+                                  Fluttertoast.showToast(msg: "Enter valid mobile number");
                                 } else if (emailCtr.text.isEmpty) {
-                                  Fluttertoast.showToast(
-                                      msg: "Email is required");
-                                } else if (!EmailValidator.validate(
-                                    emailCtr.text)) {
-                                  Fluttertoast.showToast(
-                                      msg: "Enter valid email");
+                                  Fluttertoast.showToast(msg: "Email is required");
+                                } else if (!EmailValidator.validate(emailCtr.text)) {
+                                  Fluttertoast.showToast(msg: "Enter valid email");
                                 } else if (passCtr.text.isEmpty) {
-                                  Fluttertoast.showToast(
-                                      msg: "Password is required");
+                                  Fluttertoast.showToast(msg: "Password is required");
                                 } else if (!passRegExp.hasMatch(passCtr.text)) {
                                   Fluttertoast.showToast(
                                       msg:
                                           "Password must contain at least 1 lowercase latte, 1 uppercase latter, 1 digit, 1 Special character and it should be 8 character long");
                                 } else if (confPassCtr.text.isEmpty) {
-                                  Fluttertoast.showToast(
-                                      msg: "Confirm password is required");
-                                } else if (!passRegExp
-                                    .hasMatch(confPassCtr.text)) {
+                                  Fluttertoast.showToast(msg: "Confirm password is required");
+                                } else if (!passRegExp.hasMatch(confPassCtr.text)) {
                                   Fluttertoast.showToast(
                                       msg:
                                           "Confirm password must contain at least 1 lowercase latte, 1 uppercase latter, 1 digit, 1 Special character and it should be 8 character long");
                                 } else if (confPassCtr.text != passCtr.text) {
-                                  Fluttertoast.showToast(
-                                      msg: "Password not match");
+                                  Fluttertoast.showToast(msg: "Password not match");
                                 } else {
                                   Map<String, dynamic> input = HashMap();
                                   input['name'] = nameCtr.text;
@@ -421,11 +383,10 @@ class _SignupScreenState extends State<SignupScreen> {
                                 }
                               },
                               child: Container(
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 18),
+                                margin: const EdgeInsets.symmetric(horizontal: 18),
                                 height: 40,
                                 width: MediaQuery.of(context).size.width,
-                                decoration:  BoxDecoration(
+                                decoration: BoxDecoration(
                                   color: AppColor.buttonColor,
                                   borderRadius: BorderRadius.circular(2),
                                 ),
@@ -452,29 +413,20 @@ class _SignupScreenState extends State<SignupScreen> {
                             InkWell(
                               onTap: () {
                                 Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                        const ForgotPasswordScreen()));
+                                    context, MaterialPageRoute(builder: (context) => const ForgotPasswordScreen()));
                               },
                               child: Text(
                                 "Forgot password?",
-                                style:
-                                    TextStyle(color: AppColor.colorPrimary, fontSize: 12),
+                                style: TextStyle(color: AppColor.colorPrimary, fontSize: 12),
                               ),
                             ),
                             InkWell(
                               onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const LoginScreen()));
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginScreen()));
                               },
                               child: Text(
                                 "Sign In",
-                                style:
-                                    TextStyle(color: Colors.grey, fontSize: 12),
+                                style: TextStyle(color: Colors.grey, fontSize: 12),
                               ),
                             )
                           ],

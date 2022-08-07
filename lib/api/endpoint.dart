@@ -5,12 +5,12 @@ class EndPoint {
   static const forgotPassword = "forgot";
   static const resetPassword = "passwordreset";
   static const userDetails = "userdetails";
+  static const updateProfileDetails = "update_profile";
   static const updateProfileImage = "update_profile_image";
-  static const getUserDetails = "userdetails";
   static const getCategories = "categories";
   static const getVideoList = "video-list";
   static const getCommentList = "comment-list";
   static const addComment = "add-comments";
   static const getVideoDetails = "video-details";
-  static const getVideoLikes = "video-likes";
+  static const likeVideo = "video-likes";
 }
