@@ -4,7 +4,7 @@ import 'package:svtvs/ui/video_details_screen/response/video_details_response.da
 
 class VideoDetailsState extends Equatable {
   @override
-  List<Object?> get props =>  [];
+  List<Object?> get props => [];
 }
 
 class VideoDetailsInitialState extends VideoDetailsState {}
@@ -12,44 +12,73 @@ class VideoDetailsInitialState extends VideoDetailsState {}
 class VideoDetailsLoadingState extends VideoDetailsState {}
 
 class GetVideoDetailsState extends VideoDetailsState {
- final VideoDetails details;
+  final VideoDetails details;
+
   GetVideoDetailsState({required this.details});
- @override
- List<Object?> get props => [details];
+
+  @override
+  List<Object?> get props => [details];
 }
 
 class VideoDetailsFailureState extends VideoDetailsState {
   final String message;
+
   VideoDetailsFailureState({required this.message});
+
   @override
-  List<Object?> get props =>  [message];
+  List<Object?> get props => [message];
 }
 
-class GetVideoLikeState extends VideoDetailsState{
+class GetVideoLikeState extends VideoDetailsState {
   final String like;
+
   GetVideoLikeState({required this.like});
+
   @override
-  List<Object?> get props =>  [like];
+  List<Object?> get props => [like];
 }
 
-class GetVideoLikeFailureState extends VideoDetailsState{
+class GetVideoLikeFailureState extends VideoDetailsState {
   final String message;
+
   GetVideoLikeFailureState({required this.message});
+
   @override
-  List<Object?> get props =>  [message];
+  List<Object?> get props => [message];
 }
 
-
-class GetVideoCommentsState extends VideoDetailsState{
+class GetVideoCommentsState extends VideoDetailsState {
   final List<VideoCommentList> commentList;
+
   GetVideoCommentsState({required this.commentList});
+
   @override
-  List<Object?> get props =>  [commentList];
+  List<Object?> get props => [commentList];
 }
 
-class GetVideoCommentsFailureState extends VideoDetailsState{
+class GetVideoCommentsFailureState extends VideoDetailsState {
   final String message;
+
   GetVideoCommentsFailureState({required this.message});
+
   @override
-  List<Object?> get props =>  [message];
+  List<Object?> get props => [message];
+}
+
+class AddCommentsState extends VideoDetailsState {
+  final String message;
+
+  AddCommentsState({required this.message});
+
+  @override
+  List<Object?> get props => [message];
+}
+
+class AddCommentsFailureState extends VideoDetailsState {
+  final String message;
+
+  AddCommentsFailureState({required this.message});
+
+  @override
+  List<Object?> get props => [message];
 }

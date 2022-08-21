@@ -468,6 +468,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if(image != null){
         imgFile = image;
+        log("IMG FILE====> ${imgFile!.name.toString()}");
       }
       return;
     } on PlatformException catch(e) {

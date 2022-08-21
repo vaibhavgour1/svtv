@@ -13,4 +13,5 @@ class EndPoint {
   static const addComment = "add-comments";
   static const getVideoDetails = "video-details";
   static const likeVideo = "video-likes";
+  static const addComments = "add-comments";
 }

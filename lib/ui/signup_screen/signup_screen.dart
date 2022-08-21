@@ -60,24 +60,29 @@ class _SignupScreenState extends State<SignupScreen> {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(8),
-                  // boxShadow: [
-                  //   BoxShadow(
-                  //     color: Colors.grey.shade300,
-                  //     blurRadius: 1.0,
-                  //     spreadRadius: 1.0
-                  //   ),
-                  // ],
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.shade300,
+                      offset: const Offset(
+                        0.0,
+                        -1.0,
+                      ),
+                      blurRadius: 1.0,
+                      spreadRadius: 1.0,
+                    ),
+                  ],
                 ),
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
+                      SizedBox(height: 14,),
                       ClipRRect(
-                        child: Image.network(
-                          "https://iriefm-wp-upload.s3.amazonaws.com/uploads/STRIDE-VISION-TV-LOGO.jpg",
-                          fit: BoxFit.cover,
+                        child: Image.asset(
+                          "assets/images/login.jpeg",
+                          fit: BoxFit.contain,
                           width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height * 0.18,
+                          height: MediaQuery.of(context).size.height * 0.15,
                         ),
                       ),
                       SizedBox(

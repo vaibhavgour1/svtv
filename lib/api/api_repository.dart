@@ -11,6 +11,7 @@ import 'package:svtvs/ui/login_screen/response/login_response.dart';
 import 'package:svtvs/ui/signup_screen/response/signup_response.dart';
 import 'package:svtvs/ui/update_profile/response/profile_details_response.dart';
 import 'package:svtvs/ui/update_profile/response/profile_details_update_response.dart';
+import 'package:svtvs/ui/video_details_screen/response/add_comment_response.dart';
 import 'package:svtvs/ui/video_details_screen/response/video_comments_response.dart';
 import 'package:svtvs/ui/video_details_screen/response/video_details_response.dart';
 import 'package:svtvs/ui/video_details_screen/response/video_like_response.dart';
@@ -166,6 +167,24 @@ class ApiRepository {
         message = "Something Went wrong";
       }
       return VideoCommentsResponse(error: false, message: message);
+    }
+  }
+
+  Future<AddCommentResponse> addComments(Map input) async {
+    try {
+      FormData formData = FormData.fromMap(input as Map<String, dynamic>);
+      Response res = await dio.post(EndPoint.addComment, data: formData);
+      AddCommentResponse response = AddCommentResponse.fromJson(res.toString());
+      return response;
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Something Went wrong";
+      }
+      return AddCommentResponse(error: false, message: message);
     }
   }
 

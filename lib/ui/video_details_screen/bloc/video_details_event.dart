@@ -31,3 +31,12 @@ class GetVideoCommentsEvent extends VideoDetailsEvent {
   @override
   List<Object?> get props => throw [input];
 }
+
+class AddVideoCommentsEvent extends VideoDetailsEvent {
+  final Map input;
+
+  AddVideoCommentsEvent({required this.input});
+
+  @override
+  List<Object?> get props => throw [input];
+}

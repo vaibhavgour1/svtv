@@ -51,16 +51,36 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Container(
                 margin: const EdgeInsets.only(top: 14, bottom: 40, left: 14, right: 14),
                 clipBehavior: Clip.antiAlias,
-                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.shade300,
+                      offset: const Offset(
+                        0.0,
+                        -1.0,
+                      ),
+                      blurRadius: 1.0,
+                      spreadRadius: 1.0,
+                    ),
+                  ],
+                ),
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Image.network(
-                        "https://iriefm-wp-upload.s3.amazonaws.com/uploads/STRIDE-VISION-TV-LOGO.jpg",
+                      Image.asset(
+                        "assets/images/Asset 5.png",
                         fit: BoxFit.contain,
                         width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height * 0.50,
+                        height: MediaQuery.of(context).size.height * 0.35,
+                      ),
+                      Image.asset(
+                        "assets/images/login.jpeg",
+                        fit: BoxFit.contain,
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height * 0.15,
                       ),
                       const SizedBox(
                         height: 30,
@@ -131,7 +151,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       }, builder: (context, state) {
                         if (state is LoginLoadingState) {
                           return Center(
-                            child: CircularProgressIndicator(color: AppColor.colorPrimary,),
+                            child: CircularProgressIndicator(
+                              color: AppColor.colorPrimary,
+                            ),
                           );
                         }
                         return InkWell(
@@ -160,7 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               margin: const EdgeInsets.symmetric(horizontal: 18),
                               height: 40,
                               width: MediaQuery.of(context).size.width,
-                              decoration:  BoxDecoration(
+                              decoration: BoxDecoration(
                                 color: AppColor.buttonColor,
                                 borderRadius: BorderRadius.circular(2),
                               ),
@@ -185,8 +207,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           children: [
                             InkWell(
                               onTap: () {
-                                Navigator.push(context, MaterialPageRoute(builder:
-                                    (context)=> const ForgotPasswordScreen()));
+                                Navigator.push(
+                                    context, MaterialPageRoute(builder: (context) => const ForgotPasswordScreen()));
                               },
                               child: Text(
                                 "Forgot password?",

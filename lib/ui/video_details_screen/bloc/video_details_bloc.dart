@@ -5,6 +5,7 @@ import 'package:svtvs/api/network.dart';
 import 'package:svtvs/main.dart';
 import 'package:svtvs/ui/video_details_screen/bloc/video_details_event.dart';
 import 'package:svtvs/ui/video_details_screen/bloc/video_details_state.dart';
+import 'package:svtvs/ui/video_details_screen/response/add_comment_response.dart';
 import 'package:svtvs/ui/video_details_screen/response/video_comments_response.dart';
 import 'package:svtvs/ui/video_details_screen/response/video_details_response.dart';
 import 'package:svtvs/ui/video_details_screen/response/video_like_response.dart';
@@ -15,6 +16,7 @@ class VideoDetailsBloc extends Bloc<VideoDetailsEvent, VideoDetailsState> {
     on<GetVideoDetailsEvent>(getVideoDetails);
     on<LikeVideoEvent>(likeVideo);
     on<GetVideoCommentsEvent>(getComments);
+    on<AddVideoCommentsEvent>(addComments);
   }
 
   Future<void> getVideoDetails(GetVideoDetailsEvent event, Emitter<VideoDetailsState> emit) async {
@@ -54,6 +56,19 @@ class VideoDetailsBloc extends Bloc<VideoDetailsEvent, VideoDetailsState> {
       }
     } else {
       emit(GetVideoCommentsFailureState(message: Constant.networkAlert));
+    }
+  }
+
+  Future<void> addComments(AddVideoCommentsEvent event, Emitter<VideoDetailsState> emit) async {
+    if (await Network.isConnected()) {
+      AddCommentResponse response = await repository.addComments(event.input);
+      if (!response.error) {
+        emit(AddCommentsState(message: response.message));
+      } else {
+        emit(AddCommentsFailureState(message: response.message));
+      }
+    } else {
+      emit(AddCommentsFailureState(message: Constant.networkAlert));
     }
   }
 }
