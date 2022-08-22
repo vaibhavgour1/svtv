@@ -33,6 +33,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   TextEditingController passController = TextEditingController();
   ProfileBloc profileBloc = ProfileBloc();
   XFile? imgFile;
+  String? profileImage;
+
   @override
   void initState() {
     getProfile();
@@ -119,6 +121,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         phoneController.text = state.userInfo.mobileNo;
                         ageController.text = state.userInfo.ageGroup;
                         passController.text = "123456";
+                        profileImage = state.userInfo.profileImage;
                       }
                       if (state is ProfileDetailsUploadState) {
                         Fluttertoast.showToast(msg: state.message);
@@ -126,6 +129,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       }
                       if (state is ProfileDetailsUploadFailureState) {
                         Fluttertoast.showToast(msg: state.message);
+                      }
+                      if (state is ProfileImageUploadState){
+                        profileImage = state.imgUrl;
                       }
                       return SingleChildScrollView(
                         child: Stack(
@@ -397,35 +403,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 child: Stack(
                                   children: [
                                     Center(
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(50),
-                                        child: Container(
-                                          height: 100,
-                                          width: 100,
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.circular(100),
-                                            border: Border.all(width: 8, color: Colors.white),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                  color: Colors.grey.shade500, blurRadius: 4.0, spreadRadius: 1.0),
-                                            ],
+                                      child: Container(
+                                        height: 100,
+                                        width: 100,
+                                        clipBehavior: Clip.antiAlias,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.circular(100),
+                                          border: Border.all(width: 8,color: Colors.white, style: BorderStyle.solid),
+                                          boxShadow: [
+                                            BoxShadow(
+                                                color: Colors.grey.shade300, blurRadius: 1.0, spreadRadius: 1.0,offset: Offset(0, 1)),
+                                          ],
+                                        ),
+                                        child: CachedNetworkImage(
+                                          imageUrl: profileImage ?? "",
+                                          imageBuilder: (context, imageProvider) => Image(
+                                            height: 100,
+                                            width: 100,
+                                            fit: BoxFit.contain,
+                                            image: imageProvider,
                                           ),
-                                          child: CachedNetworkImage(
-                                            imageUrl: "",
-                                            imageBuilder: (context, imageProvider) => Image(
-                                              height: 100,
-                                              width: 100,
-                                              fit: BoxFit.contain,
-                                              image: imageProvider,
-                                            ),
-                                            placeholder: (context, url) => CircularProgressIndicator(),
-                                            errorWidget: (context, url, error) => Image.asset(
-                                              "assets/images/profile-img-bg.png",
-                                              height: 100,
-                                              width: 100,
-                                              fit: BoxFit.contain,
-                                            ),
+                                          placeholder: (context, url) => const Center(child:  CircularProgressIndicator(
+                                            color: AppColor.colorPrimary,
+                                          )),
+                                          errorWidget: (context, url, error) => Image.asset(
+                                            "assets/images/profile-img-bg.png",
+                                            height: 100,
+                                            width: 100,
+                                            fit: BoxFit.cover,
                                           ),
                                         ),
                                       ),
@@ -464,14 +470,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> pickImage() async {
-    try{
+    try {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if(image != null){
+      if (image != null) {
         imgFile = image;
-        log("IMG FILE====> ${imgFile!.name.toString()}");
+        profileBloc.add(ProfileImageUploadEvent(imgFile: image));
       }
       return;
-    } on PlatformException catch(e) {
+    } on PlatformException catch (e) {
       log('Failed to pick image: $e');
     }
   }

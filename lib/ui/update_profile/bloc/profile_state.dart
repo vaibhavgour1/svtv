@@ -20,9 +20,18 @@ class GetProfileDetailsState extends ProfileState {
 }
 
 class ProfileImageUploadState extends ProfileState {
+  final String imgUrl;
+
+  ProfileImageUploadState({required this.imgUrl});
+
+  @override
+  List<Object?> get props => [imgUrl];
+}
+
+class ProfileImageUploadFailureState extends ProfileState {
   final String message;
 
-  ProfileImageUploadState({required this.message});
+  ProfileImageUploadFailureState({required this.message});
 
   @override
   List<Object?> get props => [message];
@@ -45,7 +54,6 @@ class ProfileDetailsUploadFailureState extends ProfileState {
   @override
   List<Object?> get props => [message];
 }
-
 
 class ProfileFailureState extends ProfileState {
   final String message;

@@ -1,6 +1,8 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:svtvs/api/endpoint.dart';
 import 'package:svtvs/api/server_error.dart';
 import 'package:svtvs/main.dart';
@@ -11,6 +13,7 @@ import 'package:svtvs/ui/login_screen/response/login_response.dart';
 import 'package:svtvs/ui/signup_screen/response/signup_response.dart';
 import 'package:svtvs/ui/update_profile/response/profile_details_response.dart';
 import 'package:svtvs/ui/update_profile/response/profile_details_update_response.dart';
+import 'package:svtvs/ui/update_profile/response/profile_image_response.dart';
 import 'package:svtvs/ui/video_details_screen/response/add_comment_response.dart';
 import 'package:svtvs/ui/video_details_screen/response/video_comments_response.dart';
 import 'package:svtvs/ui/video_details_screen/response/video_details_response.dart';
@@ -221,6 +224,27 @@ class ApiRepository {
         message = "Something Went wrong";
       }
       return UpdateProfileDetailsResponse(error: false, message: message);
+    }
+  }
+
+  Future<ProfileImageResponse> updateProfileImage(XFile imgFile) async {
+    try {
+      String fileName = imgFile.path.split('/').last;
+      FormData formData = FormData.fromMap({
+        "profile": await MultipartFile.fromFile(imgFile.path, filename: fileName),
+      });
+      Response res = await dio.post(EndPoint.updateProfileImage, data: formData);
+      ProfileImageResponse response = ProfileImageResponse.fromJson(res.toString());
+      return response;
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Something Went wrong";
+      }
+      return ProfileImageResponse(error: false, message: message, link: '');
     }
   }
 }
