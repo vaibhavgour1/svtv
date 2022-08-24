@@ -34,6 +34,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   ProfileBloc profileBloc = ProfileBloc();
   XFile? imgFile;
   String? profileImage;
+  String? age;
+  String? selectedAge;
+  List<String> ageGroup = ['20-29', '30-39', '40-49', '50+'];
 
   @override
   void initState() {
@@ -119,7 +122,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         nameController.text = state.userInfo.name;
                         emailController.text = state.userInfo.email;
                         phoneController.text = state.userInfo.mobileNo;
-                        ageController.text = state.userInfo.ageGroup;
+                        age = state.userInfo.ageGroup;
                         passController.text = "123456";
                         profileImage = state.userInfo.profileImage;
                       }
@@ -130,7 +133,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       if (state is ProfileDetailsUploadFailureState) {
                         Fluttertoast.showToast(msg: state.message);
                       }
-                      if (state is ProfileImageUploadState){
+                      if (state is ProfileImageUploadState) {
                         profileImage = state.imgUrl;
                       }
                       return SingleChildScrollView(
@@ -264,15 +267,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       SizedBox(
                                         width: 20,
                                       ),
-                                      Expanded(
-                                        child: TextFormField(
-                                          controller: ageController,
-                                          style: TextStyle(color: Colors.grey, fontSize: 14),
-                                          decoration: InputDecoration(
-                                            contentPadding: const EdgeInsets.all(0),
-                                            border: InputBorder.none,
-                                          ),
+                                      DropdownButton<String>(
+                                        value: selectedAge?? age,
+                                        icon: const Icon(
+                                          Icons.arrow_drop_down_sharp,
+                                          color: Colors.grey,
                                         ),
+                                        elevation: 16,
+                                        style: const TextStyle(color: Colors.grey, fontSize: 14),
+                                        underline: Container(),
+                                        onChanged: (String? newValue) {
+                                          setState(() {
+                                            selectedAge = newValue;
+                                          });
+                                        },
+                                        items: ageGroup.map<DropdownMenuItem<String>>((String value) {
+                                          return DropdownMenuItem<String>(
+                                            enabled: true,
+                                            value: value,
+                                            child: Text(
+                                              value,
+                                              style: const TextStyle(color: Colors.grey, fontSize: 14),
+                                            ),
+                                          );
+                                        }).toList(),
                                       ),
                                     ],
                                   ),
@@ -410,10 +428,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         decoration: BoxDecoration(
                                           color: Colors.white,
                                           borderRadius: BorderRadius.circular(100),
-                                          border: Border.all(width: 8,color: Colors.white, style: BorderStyle.solid),
+                                          border: Border.all(width: 8, color: Colors.white, style: BorderStyle.solid),
                                           boxShadow: [
                                             BoxShadow(
-                                                color: Colors.grey.shade300, blurRadius: 1.0, spreadRadius: 1.0,offset: Offset(0, 1)),
+                                                color: Colors.grey.shade300,
+                                                blurRadius: 1.0,
+                                                spreadRadius: 1.0,
+                                                offset: Offset(0, 1)),
                                           ],
                                         ),
                                         child: CachedNetworkImage(
@@ -424,7 +445,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             fit: BoxFit.contain,
                                             image: imageProvider,
                                           ),
-                                          placeholder: (context, url) => const Center(child:  CircularProgressIndicator(
+                                          placeholder: (context, url) => const Center(
+                                              child: CircularProgressIndicator(
                                             color: AppColor.colorPrimary,
                                           )),
                                           errorWidget: (context, url, error) => Image.asset(
@@ -497,14 +519,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
       Fluttertoast.showToast(msg: "Email is required");
     } else if (!EmailValidator.validate(emailController.text)) {
       Fluttertoast.showToast(msg: "Enter valid email");
-    } else if (ageController.text.isEmpty) {
+    } else if (age!.isEmpty ) {
       Fluttertoast.showToast(msg: "Age group is required");
     } else {
       Map<String, dynamic> input = HashMap();
       input['name'] = nameController.text;
       input['email_id'] = emailController.text;
       input['mobile'] = phoneController.text;
-      input['age_group'] = ageController.text;
+      input['age_group'] = selectedAge?? age;
       profileBloc.add(ProfileDetailsUploadEvent(input: input));
     }
   }

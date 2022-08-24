@@ -1,8 +1,10 @@
 import 'dart:collection';
 import 'dart:developer';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_share/flutter_share.dart';
 import 'package:readmore/readmore.dart';
 import 'package:svtvs/ui/catrgory_screen/category_screen.dart';
 import 'package:svtvs/ui/update_profile/update_profile_screen.dart';
@@ -263,11 +265,16 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
                                                 ),
                                                 Column(
                                                   children: [
-                                                    Image.asset(
-                                                      "assets/images/share-icon.png",
-                                                      width: 18,
-                                                      height: 18,
-                                                      color: Colors.grey,
+                                                    InkWell(
+                                                      onTap:(){
+                                                        share(details!.link);
+                                                      },
+                                                      child: Image.asset(
+                                                        "assets/images/share-icon.png",
+                                                        width: 18,
+                                                        height: 18,
+                                                        color: Colors.grey,
+                                                      ),
                                                     ),
                                                     const SizedBox(
                                                       height: 6,
@@ -314,13 +321,15 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
                                           child: ReadMoreText(
                                             details!.description,
                                             trimLines: 2,
-
                                             colorClickableText: AppColor.textBodyColor,
                                             trimMode: TrimMode.Line,
                                             trimCollapsedText: '  Show more',
                                             trimExpandedText: '  Show less',
                                             style: TextStyle(fontSize: 14, color: AppColor.textBodyColor),
-                                            moreStyle: TextStyle(fontSize: 14, color: AppColor.textBodyColor,fontWeight: FontWeight.w500),
+                                            moreStyle: TextStyle(
+                                                fontSize: 14,
+                                                color: AppColor.textBodyColor,
+                                                fontWeight: FontWeight.w500),
                                             lessStyle: TextStyle(
                                                 fontSize: 14,
                                                 color: AppColor.textBodyColor,
@@ -339,9 +348,16 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
                                           children: [
                                             Text(
                                               commentsList != null ? "${commentsList!.length} Comments" : "Comments",
-                                              style: TextStyle(color: AppColor.textHeadingColor, fontSize: 14, fontWeight: FontWeight.w500),
+                                              style: TextStyle(
+                                                  color: AppColor.textHeadingColor,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w500),
                                             ),
-                                            Image.asset("assets/images/Asset 2_4x.png",height: 14,width: 14,)
+                                            Image.asset(
+                                              "assets/images/Asset 2_4x.png",
+                                              height: 14,
+                                              width: 14,
+                                            )
                                           ],
                                         ),
                                       ),
@@ -358,16 +374,19 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
                                                 fontWeight: FontWeight.w400,
                                                 color: AppColor.textHeadingColor),
                                             decoration: InputDecoration(
-                                                contentPadding: const EdgeInsets.only(bottom: 10,top: 8, left: 8),
+                                                contentPadding: const EdgeInsets.only(bottom: 10, top: 8, left: 8),
                                                 prefixText: " ",
                                                 hintText: "Add a comment...",
                                                 suffixIcon: IconButton(
                                                   onPressed: () {
-                                                    if(commentsCtr.text.isNotEmpty){
+                                                    if (commentsCtr.text.isNotEmpty) {
                                                       addComments(widget.videoId, commentsCtr.text);
                                                     }
                                                   },
-                                                  icon: Icon(Icons.send_rounded,color: AppColor.colorPrimary,),
+                                                  icon: Icon(
+                                                    Icons.send_rounded,
+                                                    color: AppColor.colorPrimary,
+                                                  ),
                                                 ),
                                                 hintStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
                                                 fillColor: Colors.grey.shade100,
@@ -379,38 +398,65 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
                                         ),
                                       ),
                                       SizedBox(
-                                        height: 5,
+                                        height: 14,
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.symmetric(horizontal: 14),
                                         child: commentsList != null
-                                            ? Container(
-                                                child: ListView.builder(
-                                                  itemCount: commentsList!.length,
-                                                  shrinkWrap: true,
-                                                  itemBuilder: (context, index) {
-                                                    return Padding(
-                                                      padding: const EdgeInsets.symmetric(vertical: 4),
-                                                      child: Row(
+                                            ? ListView.separated(
+                                              itemCount: commentsList!.length,
+                                              shrinkWrap: true,
+                                              physics: const NeverScrollableScrollPhysics(),
+                                              itemBuilder: (context, index) {
+                                                return Padding(
+                                                  padding: const EdgeInsets.symmetric(vertical: 4),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    children: [
+                                                      Row(
                                                         children: [
-                                                          Image.asset(
-                                                            "assets/images/profile-img-bg.png",
-                                                            height: 28,
-                                                            width: 28,
+                                                          ClipRRect(
+                                                            borderRadius: BorderRadius.circular(100),
+                                                            child: CachedNetworkImage(
+                                                              imageUrl: commentsList![index].profileImage,
+                                                              imageBuilder: (context, imageProvider) => Image(
+                                                                height: 26,
+                                                                width: 26,
+                                                                fit: BoxFit.cover,
+                                                                image: imageProvider,
+                                                              ),
+                                                              errorWidget: (context, url, error) => Image.asset(
+                                                                "assets/images/profile-img-bg.png",
+                                                                height: 26,
+                                                                width: 26,
+                                                                fit: BoxFit.cover,
+                                                              ),
+                                                            ),
                                                           ),
                                                           SizedBox(
                                                             width: 10,
                                                           ),
                                                           Text(
                                                             commentsList![index].comment,
-                                                            style: TextStyle(color: Colors.grey, fontSize: 12),
+                                                            overflow: TextOverflow.ellipsis,
+                                                            style: TextStyle(color: Colors.grey, fontSize: 13),
                                                           )
                                                         ],
                                                       ),
-                                                    );
-                                                  },
-                                                ),
-                                              )
+                                                      Text(
+                                                        commentsList![index].commentDate,
+                                                        style: TextStyle(color: Colors.grey, fontSize: 11),
+                                                      )
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                              separatorBuilder: (BuildContext context, int index) {
+                                                return const Divider(
+                                                  color: Colors.grey,
+                                                );
+                                              },
+                                            )
                                             : Container(),
                                       ),
                                     ],
@@ -454,5 +500,12 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
     input['video_id'] = id;
     input['comment'] = comment;
     videoDetailsBloc.add(AddVideoCommentsEvent(input: input));
+  }
+  Future<void> share(String url) async {
+    await FlutterShare.share(
+        title: 'Stride Vision',
+        text: 'Share the video link -',
+        linkUrl: url,
+        chooserTitle: 'Stride Vision');
   }
 }

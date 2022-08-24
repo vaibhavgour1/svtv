@@ -36,6 +36,7 @@ class VideoCommentList {
    required this.comment,
    required this.commentDate,
    required this.publishDuration,
+   required this.profileImage,
   });
 
   String id;
@@ -44,6 +45,7 @@ class VideoCommentList {
   String comment;
   String commentDate;
   String publishDuration;
+  String profileImage;
 
   factory VideoCommentList.fromJson(String str) => VideoCommentList.fromMap(json.decode(str));
 
@@ -56,6 +58,7 @@ class VideoCommentList {
     comment: json["comment"] == null ? "" : json["comment"].toString(),
     commentDate: json["comment_date"] == null ? "" : json["comment_date"].toString(),
     publishDuration: json["publish_duration"] == null ? "" : json["publish_duration"].toString(),
+    profileImage: json["profile_image"] == null ? "" : json["profile_image"].toString(),
   );
 
   Map<String, dynamic> toMap() => {
@@ -65,5 +68,6 @@ class VideoCommentList {
     "comment": comment == null ? null : comment,
     "comment_date": commentDate == null ? null : commentDate,
     "publish_duration": publishDuration == null ? null : publishDuration,
+    "profile_image": profileImage == null ? null : profileImage,
   };
 }

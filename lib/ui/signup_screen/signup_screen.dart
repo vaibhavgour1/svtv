@@ -34,6 +34,8 @@ class _SignupScreenState extends State<SignupScreen> {
   RegExp emailRegExp = RegExp(r"^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{1,8})$");
   RegExp passRegExp = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
   RegExp mobileRegExp = RegExp(r'(^[0-9]*$)');
+  List<String> ageGroup = ['20-29', '30-39', '40-49', '50+'];
+  String age = "20-29";
 
   @override
   Widget build(BuildContext context) {
@@ -298,24 +300,37 @@ class _SignupScreenState extends State<SignupScreen> {
                                 ),
                               ),
                             ),
-                            SizedBox(
+                            Container(
                               width: MediaQuery.of(context).size.width * 0.40,
-                              child: TextFormField(
-                                controller: ageGroupCtr,
-                                decoration: InputDecoration(
-                                  fillColor: Colors.white,
-                                  hintText: "Age Group",
-                                  hintStyle: TextStyle(color: Colors.grey, fontSize: 13),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(3),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey)
+                              ),
+                              child:  Padding(
+                                padding: const EdgeInsets.only(left: 8.0, right: 20),
+                                child: DropdownButton<String>(
+                                  value:  age,
+                                  icon: const Icon(
+                                    Icons.arrow_drop_down_sharp,
+                                    color: Colors.grey,
                                   ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(3),
-                                    borderSide: const BorderSide(color: Colors.grey, width: 1),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(3),
-                                      borderSide: BorderSide(color: Colors.grey, width: 1)),
+                                  elevation: 16,
+                                  style: const TextStyle(color: Colors.grey, fontSize: 14),
+                                  underline: Container(),
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      age = newValue!;
+                                    });
+                                  },
+                                  items: ageGroup.map<DropdownMenuItem<String>>((String value) {
+                                    return DropdownMenuItem<String>(
+                                      enabled: true,
+                                      value: value,
+                                      child: Text(
+                                        value,
+                                        style: const TextStyle(color: Colors.grey, fontSize: 14),
+                                      ),
+                                    );
+                                  }).toList(),
                                 ),
                               ),
                             ),
@@ -382,7 +397,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                   input['country'] = countryCtr.text;
                                   input['state'] = stateCtr.text;
                                   input['city'] = cityCtr.text;
-                                  input['age_group'] = ageGroupCtr.text;
+                                  input['age_group'] = age;
 
                                   signupBloc.add(UserSignupEvent(input: input));
                                 }
