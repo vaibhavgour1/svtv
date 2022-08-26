@@ -151,6 +151,7 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
                         }
                         if (state is GetVideoLikeState) {
                           details!.userLikes = "1";
+                          details!.userLikes = (int.parse(details!.userLikes) + 1).toString();
                         }
                         if (state is GetVideoCommentsState) {
                           commentsList = state.commentList;
@@ -240,50 +241,50 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
                                             Row(
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
-                                                Column(
-                                                  children: [
-                                                    InkWell(
-                                                      onTap: () {
-                                                        likeVideo(details!.id);
-                                                      },
-                                                      child: Image.asset(
+                                                InkWell(
+                                                  onTap: () {
+                                                    likeVideo(details!.id);
+                                                  },
+                                                  child: Column(
+                                                    children: [
+                                                      Image.asset(
                                                         "assets/images/like-icon.png",
                                                         width: 18,
                                                         height: 18,
                                                         color: details!.userLikes == "1" ? Colors.blue : Colors.grey,
                                                       ),
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 6,
-                                                    ),
-                                                    Text(
-                                                      "${details!.likes} Like",
-                                                      style:
-                                                          const TextStyle(fontSize: 12, color: AppColor.textBodyColor),
-                                                    ),
-                                                  ],
+                                                      const SizedBox(
+                                                        height: 6,
+                                                      ),
+                                                      Text(
+                                                        "${details!.likes} Like",
+                                                        style: const TextStyle(
+                                                            fontSize: 12, color: AppColor.textBodyColor),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
-                                                Column(
-                                                  children: [
-                                                    InkWell(
-                                                      onTap:(){
-                                                        share(details!.link);
-                                                      },
-                                                      child: Image.asset(
+                                                InkWell(
+                                                  onTap: () {
+                                                    share(details!.link);
+                                                  },
+                                                  child: Column(
+                                                    children: [
+                                                      Image.asset(
                                                         "assets/images/share-icon.png",
                                                         width: 18,
                                                         height: 18,
                                                         color: Colors.grey,
                                                       ),
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 6,
-                                                    ),
-                                                    Text(
-                                                      "Share",
-                                                      style: TextStyle(fontSize: 12, color: AppColor.textBodyColor),
-                                                    ),
-                                                  ],
+                                                      const SizedBox(
+                                                        height: 6,
+                                                      ),
+                                                      Text(
+                                                        "Share",
+                                                        style: TextStyle(fontSize: 12, color: AppColor.textBodyColor),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                                 Column(
                                                   children: [
@@ -404,59 +405,59 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
                                         padding: const EdgeInsets.symmetric(horizontal: 14),
                                         child: commentsList != null
                                             ? ListView.separated(
-                                              itemCount: commentsList!.length,
-                                              shrinkWrap: true,
-                                              physics: const NeverScrollableScrollPhysics(),
-                                              itemBuilder: (context, index) {
-                                                return Padding(
-                                                  padding: const EdgeInsets.symmetric(vertical: 4),
-                                                  child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                    children: [
-                                                      Row(
-                                                        children: [
-                                                          ClipRRect(
-                                                            borderRadius: BorderRadius.circular(100),
-                                                            child: CachedNetworkImage(
-                                                              imageUrl: commentsList![index].profileImage,
-                                                              imageBuilder: (context, imageProvider) => Image(
-                                                                height: 26,
-                                                                width: 26,
-                                                                fit: BoxFit.cover,
-                                                                image: imageProvider,
-                                                              ),
-                                                              errorWidget: (context, url, error) => Image.asset(
-                                                                "assets/images/profile-img-bg.png",
-                                                                height: 26,
-                                                                width: 26,
-                                                                fit: BoxFit.cover,
+                                                itemCount: commentsList!.length,
+                                                shrinkWrap: true,
+                                                physics: const NeverScrollableScrollPhysics(),
+                                                itemBuilder: (context, index) {
+                                                  return Padding(
+                                                    padding: const EdgeInsets.symmetric(vertical: 4),
+                                                    child: Row(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      children: [
+                                                        Row(
+                                                          children: [
+                                                            ClipRRect(
+                                                              borderRadius: BorderRadius.circular(100),
+                                                              child: CachedNetworkImage(
+                                                                imageUrl: commentsList![index].profileImage,
+                                                                imageBuilder: (context, imageProvider) => Image(
+                                                                  height: 26,
+                                                                  width: 26,
+                                                                  fit: BoxFit.cover,
+                                                                  image: imageProvider,
+                                                                ),
+                                                                errorWidget: (context, url, error) => Image.asset(
+                                                                  "assets/images/profile-img-bg.png",
+                                                                  height: 26,
+                                                                  width: 26,
+                                                                  fit: BoxFit.cover,
+                                                                ),
                                                               ),
                                                             ),
-                                                          ),
-                                                          SizedBox(
-                                                            width: 10,
-                                                          ),
-                                                          Text(
-                                                            commentsList![index].comment,
-                                                            overflow: TextOverflow.ellipsis,
-                                                            style: TextStyle(color: Colors.grey, fontSize: 13),
-                                                          )
-                                                        ],
-                                                      ),
-                                                      Text(
-                                                        commentsList![index].commentDate,
-                                                        style: TextStyle(color: Colors.grey, fontSize: 11),
-                                                      )
-                                                    ],
-                                                  ),
-                                                );
-                                              },
-                                              separatorBuilder: (BuildContext context, int index) {
-                                                return const Divider(
-                                                  color: Colors.grey,
-                                                );
-                                              },
-                                            )
+                                                            SizedBox(
+                                                              width: 10,
+                                                            ),
+                                                            Text(
+                                                              commentsList![index].comment,
+                                                              overflow: TextOverflow.ellipsis,
+                                                              style: TextStyle(color: Colors.grey, fontSize: 13),
+                                                            )
+                                                          ],
+                                                        ),
+                                                        Text(
+                                                          commentsList![index].commentDate,
+                                                          style: TextStyle(color: Colors.grey, fontSize: 11),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  );
+                                                },
+                                                separatorBuilder: (BuildContext context, int index) {
+                                                  return const Divider(
+                                                    color: Colors.grey,
+                                                  );
+                                                },
+                                              )
                                             : Container(),
                                       ),
                                     ],
@@ -501,11 +502,9 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
     input['comment'] = comment;
     videoDetailsBloc.add(AddVideoCommentsEvent(input: input));
   }
+
   Future<void> share(String url) async {
     await FlutterShare.share(
-        title: 'Stride Vision',
-        text: 'Share the video link -',
-        linkUrl: url,
-        chooserTitle: 'Stride Vision');
+        title: 'Stride Vision', text: 'Share the video link -', linkUrl: url, chooserTitle: 'Stride Vision');
   }
 }

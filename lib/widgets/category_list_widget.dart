@@ -112,7 +112,7 @@ class _CategoryListWidgetState extends State<CategoryListWidget> {
                                             width: 10,
                                           ),
                                           Text(
-                                            "${videoList[index].likes} views",
+                                            "69k views",
                                             style: TextStyle(fontSize: 11, color: Colors.white),
                                           ),
                                         ],
